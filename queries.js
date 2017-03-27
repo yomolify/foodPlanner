@@ -6,7 +6,7 @@ var options = {
 };
 
 var pgp = require('pg-promise')(options);
-var connectionString = 'postgres://localhost:5432/foodPlanner';
+var connectionString = 'postgres://localhost:5432/foodplanner';
 var db = pgp(connectionString);
 
 // Recipe Queries
@@ -40,6 +40,23 @@ function getSingleRecipe(req, res, next) {
     .catch(function (err) {
       return next(err);
     });
+}
+
+function getRecipesByName(req, res, next) {
+    db.many("select name, rid from recipes where name like '%$1#%'", req.body.name)
+        .then(function (data) {
+            console.log(data)
+            res.status(200)
+                .json({
+                    status: 'success',
+                    data: data,
+                    message: 'Retrieved recipes by name'
+                });
+        })
+        .catch(function (err) {
+            console.log("ERROR:", err.message || err); // print error;
+            return next(err);
+        });
 }
 
 function createRecipe(req, res, next) {
@@ -80,7 +97,7 @@ function removeRecipe(req, res, next) {
       res.status(200)
         .json({
           status: 'success',
-          message: `Removed ${result.rowCount} recipe`
+          message: 'Removed ${result.rowCount} recipe'
         });
     })
     .catch(function (err) {
@@ -93,8 +110,9 @@ function removeRecipe(req, res, next) {
 function createUser(req, res, next) {
   console.log(req.body)
 
-  db.one("insert into users(name) values($1) returning uid, name", [req.body.name])
-    .then(data => {
+  db.one("insert into users(name, utid) values($1, $2) returning uid, name", [req.body.name, req.body.utid])
+    .then(function(data) {
+        console.log('received createUser');
         res.status(200)
         .json({
           status: 'success',
@@ -102,12 +120,14 @@ function createUser(req, res, next) {
           data: data
         });
     })
-    .catch(error => {
+    .catch(function(error) {
         console.log("ERROR:", error.message || error); // print error;
+        return next(error);
     })
 }
 
 function loginUser(req, res, next) {
+    console.log(req.body)
   db.one('select * from users where name = ${name}', req.body)
     .then(function (data) {
       res.status(200)
@@ -129,5 +149,6 @@ module.exports = {
   updateRecipe: updateRecipe,
   removeRecipe: removeRecipe,
   createUser: createUser,
-  loginUser: loginUser
+  loginUser: loginUser,
+  getRecipesByName: getRecipesByName
 };

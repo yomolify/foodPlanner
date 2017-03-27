@@ -47,17 +47,21 @@
         <form id="signup">
           <label for="usr">Name:</label>
           <input type="text" class="form-control" id="username" placeholder="Kim K">
-        <form/>
+          <button type="submit" class="btn btn-primary">Sign up</button>
+        </form>
       </div>
-      <button type="submit" class="btn btn-primary">Sign up</button>
+
       <hr>
       <h3>Returning user?</h3>
       <br/>
       <div class="form-group">
-        <label for="usr">Name:</label>
-        <input type="text" class="form-control" id="username">
+        <form id="login">
+          <label for="usr">Name:</label>
+          <input type="text" class="form-control" id="loginname">
+          <button id="log in" type="submit" class="btn btn-success">Log in</button>
+        </form>
       </div>
-      <button id="login" type="submit" class="btn btn-success">Log in</button>
+
       <hr>
       <p>Start planning your food and become a food ninja.</p>
     </div>
@@ -68,11 +72,30 @@
       <br/>
       <hr>
       <div class="list-group">
-      <a href="#" class="list-group-item list-group-item-action">Search Recipes by Name</a>
-      <a href="#" class="list-group-item list-group-item-action">Search Recipes by Ingredients</a>
+      <a href="#name" class="list-group-item list-group-item-action">Search Recipes by Name</a>
+      <a href="#ingredient" class="list-group-item list-group-item-action">Search Recipes by Ingredients</a>
       <a href="#" class="list-group-item list-group-item-action">Shopping List</a>
       <a href="#" class="list-group-item list-group-item-action">Meal Plan</a>
     </div>
+    </div>
+
+    <div id="name" class="col-sm-8 text-left">
+      <h2>Search Recipes by Name</h2>
+      <div class="form-group">
+      <form id="nameRecipe">
+        <label for="recipeName">Name:</label>
+        <input type="text" class="form-control" id="recipeName" placeholder="Chicken">
+        <button id="nameSubmit" type="submit" class="btn btn-success">Search</button>
+      </form>
+      </div>
+    </div>
+
+    <div id="searchResult" class="col-sm-8 text-left">
+      <h2>Recipe Results</h2>
+      <div class="form-group">
+        <div class = "recipeResult">
+        </div>
+      </div>
     </div>
 
   </div>
