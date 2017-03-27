@@ -270,6 +270,11 @@ INSERT INTO Ingredients (iid, name)
 VALUES (263, 'parsley');
 
 
+INSERT INTO Recipes (rid, name, cid, instructions)
+VALUES (101, ‘Pasta’, 301,
+ARRAY ['Bring a saucepan of salted water to the boil and cook linguine according to the packet instructions.’,
+‘Meanwhile, drizzle a lug of oil into a medium saucepan over a medium heat, add the tomato passata and capers (rinsed), then finely grate in half the lemon zest.  Simmer for 5 to 7 minutes, then season to taste.’,
+‘When the linguine is al dente, drain and toss with the sauce to coat. To serve, finely grate over some Parmesan and extra lemon zest, if desired.']);
 
 INSERT INTO Recipes (rid, name, cid, instructions)
 VALUES (102, 'Omelet',300,
@@ -281,6 +286,13 @@ ARRAY['Beat egg and egg whites in a small bowl. Mix in Parmesan cheese, Cheddar 
 INSERT INTO Recipes (rid, name, cid, instructions)
 VALUES (105, 'Egg Salad Sandwich' ,300,
 ARRAY['Place egg in a saucepan and cover with cold water.','Bring water to a boil and immediately remove from heat.','Cover and let eggs stand in hot water for 10 to 12 minutes.','Remove from hot water, cool, peel and chop.','Place the chopped eggs in a bowl, and stir in the mayonnaise, mustard and green onion.','Season with salt, pepper and paprika.','Stir and serve on your favorite bread or crackers.']);
+
+INSERT INTO Recipes (rid, name, cid, instructions)
+VALUES (106, 'Broiled Scallops', 300,
+ARRAY ['Turn broiler on.’, ‘Rinse scallop and place in a shallow baking pan. Sprinkle with garlic salt, melted butter to margarine and lemon juice.’,
+‘Broil 6 to 8 minutes or until scallops start to turn golden. Remove from oven and serve with extra melted butter or margarine on the side for dipping.']);
+
+
 
 INSERT INTO Recipes (rid, name, cid, instructions)
 VALUES (108, 'Hamburger Steak' ,300,
@@ -297,11 +309,26 @@ ARRAY['In a large bowl, mix together the ground beef, egg, bread crumbs, pepper,
 'Turn heat to low, return patties to the gravy, cover, and simmer for another 15 minutes.']);
 
 INSERT INTO Recipes (rid, name, cid, instructions)
+VALUES (109, 'Eggplant Parmesan', 300,
+ARRAY ['In a small bowl beat the egg and water together. Place the bread crumbs in shallow dish. Dip eggplant slices in egg mixture then in crumbs, being sure to coat thoroughly.',
+'Heat oil in a large skillet over medium-high heat until hot. Add eggplant slices and reduce heat to medium. Cook for 3 to 4 minutes per side or until golden brown and tender. Sprinkle mozzarella cheese over eggplant during last minute of cooking to melt.’,
+‘While eggplant is cooking, combine spaghetti sauce and pepper flakes in a microwave-safe measuring cup. Cover with plastic wrap and cook at high power for 2 minutes or until heated through.’,
+‘Top eggplant with sauce and Parmesan cheese and serve.']);
+
+
+INSERT INTO Recipes (rid, name, cid, instructions)
 VALUES (111, 'Beef Stir-Fry' ,302,
 ARRAY['Heat vegetable oil in a large wok or skillet over medium-high heat; cook and stir beef until browned, 3 to 4 minutes.',
 'Move beef to the side of the wok and add broccoli, bell pepper, carrots, green onion, and garlic to the center of the wok.',
 'Cook and stir vegetables for 2 minutes. Stir beef into vegetables and season with soy sauce and sesame seeds.',
 'Continue to cook and stir until vegetables are tender, about 2 more minutes.']);
+
+INSERT INTO Recipes (rid, name, cid, instructions)
+VALUES (112, 'One-pan Taco', 303,
+ARRAY ['Spray large nonstick skillet with nonstick cooking spray. Add meat and brown over medium-high heat; drain off excess fat.’,
+‘Add seasoning mix and water; stir. Bring to boil.’,
+‘Stir in rice. Sprinkle with cheese; cover. Reduce heat to low; simmer 5 minutes. Top with lettuce and tomato just before serving.']);
+
 
 INSERT INTO Recipes (rid, name, cid, instructions)
 VALUES (114, 'Garlic Chicken' ,300,
@@ -326,11 +353,33 @@ ARRAY['Preheat oven to 500 degree F. Chop all the veggies into large pieces.',
 'Enjoy with rice, pasta, or a salad.']);
 
 INSERT INTO Recipes (rid, name, cid, instructions)
+VALUES (119, 'Sardine Curry', 304,
+ARRAY [‘Heat the canola oil in a skillet.’,
+'Stir the red curry paste into the hot oil; cook and stir for a few seconds before adding the garlic and shallot.’,
+ ‘Cook and stir the garlic and shallot until fragrant. Add the sardines; toss around in the pan to brown the skin a little bit and cover it well with the paste mixture.’,
+ ‘Gently stir the coconut cream into the mixture and continue to toss to coat the sardines. Allow mixture to come to a boil until the sauce thickens, about 5 minutes.’]);
+
+
+INSERT INTO Recipes (rid, name, cid, instructions)
 VALUES (120, 'Chicken Vegetable Stew',300,
 ARRAY['In a large pot, put the chopped onion, chicken breast meat, carrots and potatoes.',
 'Add the salt and turmeric. Dissolve the tomato paste in water and add.',
 'If desired, add garlic powder and ground black pepper to season.',
 'Cook for 1 to 1 1/2 hours on medium low heat. Serve.']);
+
+INSERT INTO Recipes (rid, name, cid, instructions)
+VALUES (122, 'Strawberry Ice Cream’, 250,
+ARRAY ['Pull the green hulls out of the strawberries. If they are still quite hard, cut them in half or quarters with a table knife.’,
+‘Tip them into a flat-bottomed dish.’,
+‘Use a potato masher to squash the strawberries as much as you can. Tip into a bowl. Ask your grown-up helper to give you a hand if you need to.’,
+‘Add the mascarpone and mash this in – don’t worry if it is a bit lumpy. Add the condensed milk and mix everything together. Don’t worry if the mix is streaky.’,
+'Spoon the mixture into a metal or plastic box and put it in the freezer. Wait until the next day or at least 6 hours before scooping into bowls or cones. Decorate how you like.’]);
+
+INSERT INTO Recipes (rid, name, cid, instructions)
+VALUES (123, ‘Chocolate Cup Cake’, 300,
+ARRAY ['Heat oven to 180C/fan 160C/gas 4 and line a 10-hole muffin tin with paper cases. Whizz the chocolate into small pieces in a food processor. In the largest mixing bowl you have, tip in the flour, sugar, cocoa, oil, 100ml soured cream, eggs, vanilla and 100ml water. Whisk everything together with electric beaters until smooth, then quickly stir in 100g of the whizzed-up chocolate bits. Divide between the 10 cases, then bake for 20 mins until a skewer inserted comes out clean (make sure you don’t poke it into a chocolate chip bit). Cool on a wire rack.',
+‘To make the icing, put the remaining chocolate bits, soured cream and 3 tbsp sugar in a small saucepan. Heat gently, stirring, until the chocolate is melted and you have a smooth icing. Chill in the fridge until firm enough to swirl on top of the muffins, then tuck in.']);
+
 
 INSERT INTO Recipes (rid, name, cid, instructions)
 VALUES (124, 'Chicken & Vegetable Pasta',301,
@@ -342,6 +391,14 @@ ARRAY['Cook linguine pasta according to package directions. Drain. Set aside; ke
 'Stir in cooked fusilli and cheese.']);
 
 INSERT INTO Recipes (rid, name, cid, instructions)
+VALUES (126, 'Italian Bean Salad', 301,
+ARRAY ['Finely chop the spring onions and put into a bowl with the garlic and the chilli.',
+‘Mix in the cannellini beans and the butter beans.’,
+‘Whisk the olive oil with the white wine vinegar and add plenty of seasoning.‘,
+‘Stir through the salad with plenty of chopped parsley.’]);
+
+
+INSERT INTO Recipes (rid, name, cid, instructions)
 VALUES (100, 'Chicken Fried Rice',302,
 ARRAY['In a small bowl, beat egg with water.',
 'Melt butter in a large skillet over medium low heat.',
@@ -349,6 +406,21 @@ ARRAY['In a small bowl, beat egg with water.',
 'Heat oil in same skillet; add onion and saute until soft.',
 'Then add rice, soy sauce, pepper and chicken.',
 'Stir fry together for about 5 minutes, then stir in egg. Serve hot.']);
+
+INSERT INTO Ingredients_Recipes (iid, rid, measurement)
+VALUES(201,101, ‘2 tsp’);
+INSERT INTO Ingredients_Recipes (iid, rid, measurement)
+VALUES(203,101, ‘1’);
+INSERT INTO Ingredients_Recipes (iid, rid, measurement)
+VALUES(210,101, ‘3’);
+INSERT INTO Ingredients_Recipes (iid, rid, measurement)
+VALUES(211,101, ‘half’);
+INSERT INTO Ingredients_Recipes (iid, rid, measurement)
+VALUES(212,101, ‘1/4 cup’);
+INSERT INTO Ingredients_Recipes (iid, rid, measurement)
+VALUES(207,101, ‘1 tsp’);
+INSERT INTO Ingredients_Recipes (iid, rid, measurement)
+VALUES(208,101, ‘2 tsp’);
 
 INSERT INTO Ingredients_Recipes (iid, rid, measurement)
 VALUES(200, 102, '4');
@@ -377,6 +449,15 @@ INSERT INTO Ingredients_Recipes (iid, rid, measurement)
 VALUES(219, 105, 'to taste');
 
 INSERT INTO Ingredients_Recipes (iid, rid, measurement)
+VALUES(222,106, ‘12’);
+INSERT INTO Ingredients_Recipes (iid, rid, measurement)
+VALUES(207,106, ‘1 tsp’);
+INSERT INTO Ingredients_Recipes (iid, rid, measurement)
+VALUES(221,106, ‘1 tsp’);
+INSERT INTO Ingredients_Recipes (iid, rid, measurement)
+VALUES(211,106, ‘half’);
+
+INSERT INTO Ingredients_Recipes (iid, rid, measurement)
 VALUES(200, 108, '1');
 INSERT INTO Ingredients_Recipes (iid, rid, measurement)
 VALUES(224, 108, '1 pound, ground');
@@ -394,6 +475,18 @@ INSERT INTO Ingredients_Recipes (iid, rid, measurement)
 VALUES(225, 108, '1 cup');
 
 INSERT INTO Ingredients_Recipes (iid, rid, measurement)
+VALUES(200,109, ‘1’);
+INSERT INTO Ingredients_Recipes (iid, rid, measurement)
+VALUES(228,109, ‘1’);
+INSERT INTO Ingredients_Recipes (iid, rid, measurement)
+VALUES(227,109, ‘1/4 cup’);
+INSERT INTO Ingredients_Recipes (iid, rid, measurement)
+VALUES(201,109, ‘2 tsp’);
+INSERT INTO Ingredients_Recipes (iid, rid, measurement)
+VALUES(230,109, ‘2 tsp’);
+
+
+INSERT INTO Ingredients_Recipes (iid, rid, measurement)
 VALUES(224, 111, '1 pound, sirloin cut');
 INSERT INTO Ingredients_Recipes (iid, rid, measurement)
 VALUES(208, 111, '2 tablespoons');
@@ -409,6 +502,22 @@ INSERT INTO Ingredients_Recipes (iid, rid, measurement)
 VALUES(235, 111, '2 tablespoons');
 INSERT INTO Ingredients_Recipes (iid, rid, measurement)
 VALUES(233, 111, '1 teaspoon, minced');
+
+INSERT INTO Ingredients_Recipes (iid, rid, measurement)
+VALUES(224,112, ‘1lb’);
+INSERT INTO Ingredients_Recipes (iid, rid, measurement)
+VALUES(208,112, ‘1 tsp’);
+INSERT INTO Ingredients_Recipes (iid, rid, measurement)
+VALUES(236,112, ‘1 pkg’);
+INSERT INTO Ingredients_Recipes (iid, rid, measurement)
+VALUES(237,112, ‘2 cups’);
+INSERT INTO Ingredients_Recipes (iid, rid, measurement)
+VALUES(203,112, ‘1’);
+INSERT INTO Ingredients_Recipes (iid, rid, measurement)
+VALUES(238,112, ‘2 cups’);
+INSERT INTO Ingredients_Recipes (iid, rid, measurement)
+VALUES(201,112, ‘1 cup’);
+
 
 INSERT INTO Ingredients_Recipes (iid, rid, measurement)
 VALUES(221, 114, '3 tablespoons');
@@ -455,6 +564,16 @@ INSERT INTO Ingredients_Recipes (iid, rid, measurement)
 VALUES(219, 118, '1/2 teaspoon');
 
 INSERT INTO Ingredients_Recipes (iid, rid, measurement)
+VALUES(208,119, ‘1 tsp’);
+INSERT INTO Ingredients_Recipes (iid, rid, measurement)
+VALUES(246,119, ‘1 tsp’);
+INSERT INTO Ingredients_Recipes (iid, rid, measurement)
+VALUES(247,119, ‘1’);
+INSERT INTO Ingredients_Recipes (iid, rid, measurement)
+VALUES(248,119, ‘1 can’);
+
+
+INSERT INTO Ingredients_Recipes (iid, rid, measurement)
 VALUES(229, 120, '2 boneless breasts');
 INSERT INTO Ingredients_Recipes (iid, rid, measurement)
 VALUES(205, 120, '1');
@@ -472,6 +591,33 @@ INSERT INTO Ingredients_Recipes (iid, rid, measurement)
 VALUES(203, 120, 'paste form, 3 tablespoons');
 
 INSERT INTO Ingredients_Recipes (iid, rid, measurement)
+VALUES(250,122, ‘400g’);
+INSERT INTO Ingredients_Recipes (iid, rid, measurement)
+VALUES(251,122, ‘250g’);
+INSERT INTO Ingredients_Recipes (iid, rid, measurement)
+VALUES(252,122, ‘397g’);
+INSERT INTO Ingredients_Recipes (iid, rid, measurement)
+VALUES(253,122, ‘any’);
+INSERT INTO Ingredients_Recipes (iid, rid, measurement)
+VALUES(254,122, ‘any’);
+
+INSERT INTO Ingredients_Recipes (iid, rid, measurement)
+VALUES(215,123, ‘200g’);
+INSERT INTO Ingredients_Recipes (iid, rid, measurement)
+VALUES(257,123, ‘300g’);
+INSERT INTO Ingredients_Recipes (iid, rid, measurement)
+VALUES(213,123, ‘3 tsp’);
+INSERT INTO Ingredients_Recipes (iid, rid, measurement)
+VALUES(208,123, ‘150ml ’);
+INSERT INTO Ingredients_Recipes (iid, rid, measurement)
+VALUES(258,123, ‘284g’);
+INSERT INTO Ingredients_Recipes (iid, rid, measurement)
+VALUES(254,123, ‘284g’);
+INSERT INTO Ingredients_Recipes (iid, rid, measurement)
+VALUES(200,123, ‘2’);
+
+
+INSERT INTO Ingredients_Recipes (iid, rid, measurement)
 VALUES(212, 124, '2 cups');
 INSERT INTO Ingredients_Recipes (iid, rid, measurement)
 VALUES(221, 124, '1/4 cup');
@@ -485,6 +631,24 @@ INSERT INTO Ingredients_Recipes (iid, rid, measurement)
 VALUES(234, 124, '1/2 cup');
 INSERT INTO Ingredients_Recipes (iid, rid, measurement)
 VALUES(204, 124, '1/4 cup');
+
+INSERT INTO Ingredients_Recipes (iid, rid, measurement)
+VALUES(205,126, ‘1 bunch’);
+INSERT INTO Ingredients_Recipes (iid, rid, measurement)
+VALUES(233,126, ‘2 cloves’);
+INSERT INTO Ingredients_Recipes (iid, rid, measurement)
+VALUES(259,126, ‘1’);
+INSERT INTO Ingredients_Recipes (iid, rid, measurement)
+VALUES(260,126, ‘1 can’);
+INSERT INTO Ingredients_Recipes (iid, rid, measurement)
+VALUES(261,126, ‘1 can’);
+INSERT INTO Ingredients_Recipes (iid, rid, measurement)
+VALUES(208,126, ‘6 tsp’);
+INSERT INTO Ingredients_Recipes (iid, rid, measurement)
+VALUES(262,126, ‘2 tsp’);
+INSERT INTO Ingredients_Recipes (iid, rid, measurement)
+VALUES(263,126, ‘many’);
+
 
 INSERT INTO Ingredients_Recipes (iid, rid, measurement)
 VALUES(200, 100, '1');
