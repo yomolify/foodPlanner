@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html ng-app="planner">
+<html lang="en">
 <head>
     <title>Food Planner</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="../stylesheets/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -12,7 +11,6 @@
     <script src="../core.js"></script>
 </head>
 <body>
-
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -25,38 +23,25 @@
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Home</a></li>
+                <li class="active"><a href="home.html">Home</a></li>
             </ul>
         </div>
     </div>
 </nav>
 
-<div class="container-fluid text-center">
-    <br/>
-    <div class="row content">
-        <div class="col-sm-2">
-        </div>
-
-        <!-- After logging in / signing up -->
-        <div id="home" class="col-sm-8 text-left">
-            <h3 id="greeting">Hey</h3>
-            <br/>
-            <hr>
-            <div class="list-group">
-                <a href="#/searchIngredients" class="list-group-item list-group-item-action">Search Recipes by Name</a>
-                <a href="#ingredient" class="list-group-item list-group-item-action">Search Recipes by Ingredients</a>
-                <a href="#" class="list-group-item list-group-item-action">Shopping List</a>
-                <a href="#" class="list-group-item list-group-item-action">Meal Plan</a>
-            </div>
-        </div>
-
-
+<div ng-controller='SearchByName' id="name" class="col-sm-8 text-left">
+    <h2>Search Recipes by Name</h2>
+    <div class="form-group" ng-submit ="searchRecipe()" >
+        <form id="nameRecipe">
+        <label for="recipeName">Name:</label>
+        <input type="text" ng-model="recipeName" class="form-control" id="recipeName" placeholder="Chicken">
+        <button id="nameSubmit"  type="submit" class="btn btn-success">Search</button>
+    </form>
     </div>
 </div>
 
 <footer class="container-fluid text-center">
     <p>Copyright FoodPlanner © 2017</p>
 </footer>
-
 </body>
 </html>

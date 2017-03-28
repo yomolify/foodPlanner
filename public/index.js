@@ -99,7 +99,7 @@ $(document).ready(function() {
         // })
         // .done(function( result ) {
         //     $("#name").hide();
-        //     document.location.replace("searchIngredients.html");
+        //     document.location.replace("searchName.html");
         //     // $(".recipeResult").append('<p>hi</p>')
         //     $.each(result.data, function(i, value){
         //         $(".recipeResult").append('<a href="#" class="list-group-item list-group-item-action">' +  value.name + '</a>')

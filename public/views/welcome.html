@@ -31,16 +31,17 @@
   </div>
 </nav>
 
-<div ng-controller="foodPlannerController" id="main" class="container-fluid text-center">
+<div ng-controller="WelcomePageController" id="main" class="container-fluid text-center">
 <br/>
   <div class="row content">
   <div class="col-sm-2">
   </div>
-      {{display}}
+
+  <p>{{display}}</p>
 
 
     <!-- Welcome screen -->
-    <div id="welcome" ng-show="welcomeShow" class="col-sm-8 text-left">
+  <div id="welcome" ng-show="welcomeShow" class="col-sm-8 text-left">
       <h2>Welcome to your Food Planner!</h2>
       <br/>
       <h3>First time user?</h3>
@@ -64,27 +65,29 @@
         </form>
       </div>
 
+      <div ng-view></div>
+
       <hr>
       <p>Start planning your food and become a food ninja.</p>
     </div>
 
      <!--After logging in / signing up -->
-    <div id="home" ng-show="homeShow" class="col-sm-8 text-left">
-      <h3 id="greeting">{{"Hey " + username}}</h3>
-      <br/>
-      <hr>
-      <div class="list-group">
-      <a href="#name" class="list-group-item list-group-item-action" onclick="searchName()">Search Recipes by Name</a>
-      <a href="#ingredient" class="list-group-item list-group-item-action">Search Recipes by Ingredients</a>
-      <a href="#" class="list-group-item list-group-item-action">Shopping List</a>
-      <a href="#" class="list-group-item list-group-item-action">Meal Plan</a>
-    </div>
-    </div>
+    <!--<div id="home" ng-show="homeShow" class="col-sm-8 text-left">-->
+      <!--<h3 id="greeting">{{"Hey " + username}}</h3>-->
+      <!--<br/>-->
+      <!--<hr>-->
+      <!--<div class="list-group">-->
+      <!--<a href="#name" class="list-group-item list-group-item-action" onclick="searchName()">Search Recipes by Name</a>-->
+      <!--<a href="#ingredient" class="list-group-item list-group-item-action">Search Recipes by Ingredients</a>-->
+      <!--<a href="#" class="list-group-item list-group-item-action">Shopping List</a>-->
+      <!--<a href="#" class="list-group-item list-group-item-action">Meal Plan</a>-->
+    <!--</div>-->
+    <!--</div>-->
 
     <!--<div id="name" ng-show = "nameShow" class="col-sm-8 text-left">-->
       <!--<h2>Search Recipes by Name</h2>-->
       <!--<div class="form-group">-->
-      <!--<form id="nameRecipe">-->
+      <!--<form id="nameRecipe" ng-submit>-->
         <!--<label for="recipeName">Name:</label>-->
         <!--<input type="text" class="form-control" id="recipeName" placeholder="Chicken">-->
         <!--<button id="nameSubmit" type="submit" class="btn btn-success">Search</button>-->
@@ -100,7 +103,7 @@
       <!--</div>-->
     <!--</div>-->
 
-  <!--</div>-->
+  </div>
 </div>
 
 <footer class="container-fluid text-center">
