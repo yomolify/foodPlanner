@@ -1,9 +1,9 @@
 $(document).ready(function() {
     var user = "";
 
-    $(function(){
-        $("#greeting").append(" " + user);
-    })
+    // $(function(){
+    //     $("#greeting").append(" " + user);
+    // })
     // $("#home").hide();
     // $("#name").hide();
     // $("#searchResult").hide();
@@ -15,16 +15,24 @@ $(document).ready(function() {
         var $form = $( this ),
         name = $form.find( "input[id='username']" ).val()
         $.ajax({
-          method: "POST",
-          url: "/api/users",
-          data: { name: name, utid: 1 }
-        })
-        .done(function( result ) {
-            user = result.data.name;
+            method: "POST",
+            url: "/api/users",
+            data: {name: name, utid: 1},
+            dataType: "json",
+            success: function (data, textStatus, jqXHR) {
+                user = data.name;
+                document.location.replace("home.html");
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
 
-            // document.location.replace("home.html");
-            // $("#greeting").append(" " + user);
+            }
         })
+        // .then(function( result ) {
+        //     user = result.data.name;
+        //
+        //     document.location.replace("home.html");
+        //     $("#greeting").append(" " + user);
+        // })
     });
 
     // $("#signup").submit(function(){
@@ -33,7 +41,7 @@ $(document).ready(function() {
     //     $.ajax({
     //       method: "POST",
     //       url: "/api/users",
-    //       data: { name: name, utid: 1 }
+    //       data: { "name": name, "utid": 1 }
     //     })
     //     .done(function( result ) {
     //         user = result.data.name;
@@ -54,7 +62,7 @@ $(document).ready(function() {
         })
             .done(function( result ) {
                 user = result.data.name;
-                window.location.href('../home.html');
+                window.location.href('/home.html');
                 $("#greeting").append(" " + user);
             })
     });
@@ -81,22 +89,23 @@ $(document).ready(function() {
     // });
 
     $("#nameRecipe").submit(function(){
-        var $form = $( this ),
-            name = $form.find( "input[id='recipeName']" ).val()
-        $.ajax({
-            method: "POST",
-            url: "/api/recipes/name",
-            data: { name: name}
-        })
-        .done(function( result ) {
-            $("#name").hide();
-            $("#searchResult").show();
-            // $(".recipeResult").append('<p>hi</p>')
-            $.each(result.data, function(i, value){
-                $(".recipeResult").append('<a href="#" class="list-group-item list-group-item-action">' +  value.name + '</a>')
-            });
-
-        })
+        window.location.href("searchIngredients.html");
+        // var $form = $( this ),
+        //     name = $form.find( "input[id='recipeName']" ).val()
+        // $.ajax({
+        //     method: "POST",
+        //     url: "/api/recipes/name",
+        //     data: { name: name}
+        // })
+        // .done(function( result ) {
+        //     $("#name").hide();
+        //     document.location.replace("searchIngredients.html");
+        //     // $(".recipeResult").append('<p>hi</p>')
+        //     $.each(result.data, function(i, value){
+        //         $(".recipeResult").append('<a href="#" class="list-group-item list-group-item-action">' +  value.name + '</a>')
+        //     });
+        //
+        // })
     })
 
 

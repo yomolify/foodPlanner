@@ -140,9 +140,8 @@ function createUser(req, res, next) {
     // res.status(200).send('hi');
 
 
-  db.one("insert into users(name, utid) values($1, $2) returning uid, name", [req.body.name, req.body.utid])
+  db.many("insert into users(name, utid) values($1, $2) returning uid, name", [req.body.name, req.body.utid])
     .then(function(data) {
-        console.log('received createUser');
         res.status(200)
         .json({
           status: 'success',
@@ -159,7 +158,7 @@ function createUser(req, res, next) {
 
 function loginUser(req, res, next) {
     console.log(req.body)
-  db.one('select * from users where name = ${name}', req.body)
+  db.many('select * from users where name = ${name}', req.body)
     .then(function (data) {
       res.status(200)
         .json({
