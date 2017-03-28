@@ -1,56 +1,16 @@
-<!DOCTYPE html>
-<html ng-app="planner">
-<head>
-  <title>Food Planner</title>
-  <meta charset="utf-8">
-  <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <link rel="stylesheet" href="../stylesheets/style.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script src="../core.js"></script>
-</head>
-<body>
-
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">Food Planner</a>
-    </div>
-    <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Home</a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
-
-<div ng-controller="WelcomePageController" id="main" class="container-fluid text-center">
-<br/>
-  <div class="row content">
-  <div class="col-sm-2">
-  </div>
-
-  <p>{{display}}</p>
-
 
     <!-- Welcome screen -->
   <div id="welcome" ng-show="welcomeShow" class="col-sm-8 text-left">
+      {{display}}
       <h2>Welcome to your Food Planner!</h2>
       <br/>
       <h3>First time user?</h3>
       <br/>
       <div class="form-group">
-        <form id="signup" ng-submit="signUp()">
+        <form id="signup">
           <label for="username">Name:</label>
           <input type="text" ng-model="username" class="form-control" id="username" placeholder="Kim K">
-          <button type="submit" class="btn btn-primary">Sign up</button>
+          <button type="submit" class="btn btn-primary" ng-click="signUp()">Sign up</button>
         </form>
       </div>
 
@@ -65,7 +25,6 @@
         </form>
       </div>
 
-      <div ng-view></div>
 
       <hr>
       <p>Start planning your food and become a food ninja.</p>
@@ -103,12 +62,4 @@
       <!--</div>-->
     <!--</div>-->
 
-  </div>
-</div>
 
-<footer class="container-fluid text-center">
-  <p>Copyright FoodPlanner © 2017</p>
-</footer>
-
-</body>
-</html>
