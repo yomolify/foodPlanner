@@ -11,6 +11,8 @@ var db = pgp(connectionString);
 
 // Recipe Queries
 
+// select distinct ir.rid from ingredients_recipes ir where ir.rid in ((select ir1.rid from ingredients_recipes ir1 where ir1.iid=229) intersect (select ir2.rid from ingredients_recipes ir2 where ir2.iid=234));
+
 function getAllRecipes(req, res, next) {
   db.any('select * from recipes')
     .then(function (data) {
@@ -20,6 +22,7 @@ function getAllRecipes(req, res, next) {
           data: data,
           message: 'Retrieved all recipes'
         });
+
     })
     .catch(function (err) {
       return next(err);
@@ -57,6 +60,15 @@ function getRecipesByName(req, res, next) {
             console.log("ERROR:", err.message || err); // print error;
             return next(err);
         });
+}
+
+function getRecipesByIngredients(req, res, next){
+    db.many("select distinct r.name from ingredients_recipes ir, recipes r " +
+        "where ir.rid = r.rid and ir.rid in (" +
+        "(select ir1.rid from ingredients_recipes ir1 where ir1.iid=$1) intersect " +
+        "(select ir2.rid from ingredients_recipes ir2 where ir2.iid=$2)) intersect" +
+        "(select ir3.rid from ingredients_recipes ir3 where ir3.iid=$3",
+    [req])
 }
 
 function createRecipe(req, res, next) {
@@ -105,10 +117,28 @@ function removeRecipe(req, res, next) {
     });
 }
 
+// Ingredient Queries
+function getAllIngreidents(req, res, next) {
+    db.any('select * from ingredients')
+        .then(function (data) {
+            res.status(200)
+                .json({
+                    status: 'success',
+                    data: data,
+                    message: 'Retrieved all recipes'
+                });
+        })
+        .catch(function (err) {
+            return next(err);
+        });
+}
+
 // User Queries
 
 function createUser(req, res, next) {
-  console.log(req.body)
+  console.log(req.body);
+    // res.status(200).send('hi');
+
 
   db.one("insert into users(name, utid) values($1, $2) returning uid, name", [req.body.name, req.body.utid])
     .then(function(data) {
@@ -119,6 +149,7 @@ function createUser(req, res, next) {
           message: 'Inserted one user',
           data: data
         });
+
     })
     .catch(function(error) {
         console.log("ERROR:", error.message || error); // print error;
@@ -150,5 +181,6 @@ module.exports = {
   removeRecipe: removeRecipe,
   createUser: createUser,
   loginUser: loginUser,
-  getRecipesByName: getRecipesByName
+  getRecipesByName: getRecipesByName,
+  getAllIngredients: getAllIngreidents
 };

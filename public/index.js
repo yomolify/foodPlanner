@@ -1,10 +1,16 @@
 $(document).ready(function() {
     var user = "";
-    $("#home").hide();
-    $("#name").hide();
-    $("#searchResult").hide();
+
+    $(function(){
+        $("#greeting").append(" " + user);
+    })
+    // $("#home").hide();
+    // $("#name").hide();
+    // $("#searchResult").hide();
+
 
     $("#signup").submit(function(){
+
         var $form = $( this ),
         name = $form.find( "input[id='username']" ).val()
         $.ajax({
@@ -14,9 +20,9 @@ $(document).ready(function() {
         })
         .done(function( result ) {
             user = result.data.name;
-            $("#welcome").hide();
-            $("#home").show();
-            $("#greeting").append(" " + user);
+
+            // document.location.replace("home.html");
+            // $("#greeting").append(" " + user);
         })
     });
 
@@ -30,18 +36,31 @@ $(document).ready(function() {
         })
             .done(function( result ) {
                 user = result.data.name;
-                $("#welcome").hide();
-                $("#home").show();
+                window.location.href('../home.html');
                 $("#greeting").append(" " + user);
             })
     });
 
-    $('.list-group').on('click', '.list-group-item', function(e) {
-        var $this = $(this);
-        var href = $this.attr('href');
-        $("#home").hide();
-        $(href).show();
-    });
+    function searchName(){
+        document.getElementById("content").innerHTML='<object type="text/html" data="home.html" ></object>'
+    }
+
+    function searchIngredients(){
+        $.ajax({
+            method: "GET",
+            url: "/api/ingredients"
+        })
+            .done(function(result){
+
+            })
+    }
+
+    // $('.list-group').on('click', '.list-group-item', function(e) {
+    //     var $this = $(this);
+    //     var href = $this.attr('href');
+    //     $("#home").hide();
+    //     $(href).show();
+    // });
 
     $("#nameRecipe").submit(function(){
         var $form = $( this ),
@@ -61,4 +80,6 @@ $(document).ready(function() {
 
         })
     })
+
+
 });
