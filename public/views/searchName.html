@@ -29,16 +29,14 @@
     </div>
 </nav>
 
-<div ng-controller='SearchByIngredient' id="name" class="col-sm-8 text-left">
-    <h2>Search Recipes by Ingredients</h2>
-
-    <p ng-show="rendering">Grabing Ingredients ...</p>
-    <div class="form-group" ng-show="searchIngredients" ng-submit ="searchRecipe()" >
+<div ng-controller='SearchByName' id="name" class="col-sm-8 text-left">
+    <h2>Search Recipes by Name</h2>
+    <div class="form-group" ng-submit ="searchRecipe()" >
         <form id="nameRecipe">
-            <label for="recipeName">Name:</label>
-            <input type="text" ng-model="recipeName" class="form-control" id="recipeName" placeholder="Chicken">
-            <button id="nameSubmit"  type="submit" class="btn btn-success">Search</button>
-        </form>
+        <label for="recipeName">Name:</label>
+        <input type="text" ng-model="recipeName" class="form-control" id="recipeName" placeholder="Chicken">
+        <button id="nameSubmit"  type="submit" class="btn btn-success">Search</button>
+    </form>
     </div>
 </div>
 
