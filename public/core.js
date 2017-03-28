@@ -21,7 +21,7 @@ app.config(['$routeProvider',
         }).
         when('/recipe/:rid', {
             templateUrl: 'views/home.html',
-            controller: 'RecipeResultsController'
+            controller: 'RecipeController'
         }).
 
         otherwise({
@@ -170,6 +170,30 @@ app.controller('RecipeResultsController', function($scope, recipeService){
         $scope.recipes = recipeService.retrieveRecipes();
     }
 })
+
+app.controller('RecipeController', function($scope, $routeParams){
+    $scope.recipe_id = $routeParams.rid;
+    $scope.getDetails = function(){
+        var req = {
+            method: 'POST',
+            url: 'http://localhost:3000/api/recipes/' + $scope.recipe_id,
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: data
+        };
+
+        $http(req)
+            .then(function(resp){
+                var data =
+                // userService.setUser(resp.data.name, resp.data.uid);
+                // $scope.display = resp.data.name;
+                $scope.welcomeShow = false;
+                $scope.homeShow = true;
+            })
+    }
+
+}
 //
 // app.controller('SearchByIngredients', function($scope, $http, $location, recipeService){
 //     $scope.recipeName = '';

@@ -20,6 +20,9 @@ router.get('/api/ingredients', db.getAllIngredients);
 router.post('/api/users', db.createUser);
 router.post('/api/login', db.loginUser);
 
+// Meals
+// router.get('/api/meals', db.getMeals);
+
 // router.get('/api/ingredients', db.getAllIngredients);
 
 module.exports = router;

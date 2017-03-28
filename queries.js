@@ -172,6 +172,25 @@ function loginUser(req, res, next) {
     });
 }
 
+// mealPlan queries
+
+function getMeals(req, res, next){
+    db.many('select * from recipes r where r.rid =' +
+        '(select mr.rid from mealplan_recipe mr where mr.mid=' +
+        '(select mu.mid from mealplan_user mu where mu.name="__" and mu.uid="_")')
+        .then(function (data){
+            res.status(200)
+                .json({
+                    status: 'success',
+                    data: data,
+                    message: 'Retrieved recipes for meal'
+                });
+        })
+        .catch(function (err){
+            return next(err);
+        })
+}
+
 module.exports = {
   getAllRecipes: getAllRecipes,
   getSingleRecipe: getSingleRecipe,

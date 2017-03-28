@@ -108,5 +108,25 @@ $(document).ready(function() {
         // })
     })
 
+    // function getMealPlanBy(mealofday){
+    //     $.ajax({
+    //         method: "GET",
+    //         url: "/api/meals"
+    //     })
+    //         .done(function(result){
+    //
+    //         })
+    //
+    // }
+
+    // CREATE OR REPLACE FUNCTION insert_mealplans(IN val int) RETURNS VOID  AS
+    // $body$
+    // BEGIN
+    // FOR i IN 1..10 LOOP
+    // insert into test (val)
+    // values($23);
+    // END LOOP;
+    // END;
+    // $body$ Language 'plpgsql' VOLATILE;
 
 });
