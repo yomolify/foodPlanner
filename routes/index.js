@@ -27,10 +27,13 @@ router.post('/api/meal/recipes', db.getMealRecipes);
 
 // router.get('/api/meals', db.getMeals);
 router.post('/api/mealplanid', db.getMealPlanID);
-router.post('/api/mealplans', db.addMealPlanRecipe)
+router.post('/api/mealplans', db.addMealPlanRecipe);
 
 
 
 // router.get('/api/ingredients', db.getAllIngredients);
+
+// Aggregation
+router.post('/api/nestedaggregation', db.nestedAggregation);
 
 module.exports = router;

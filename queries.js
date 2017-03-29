@@ -142,6 +142,7 @@ function getAllIngreidents(req, res, next) {
                 });
         })
         .catch(function (err) {
+            console.log("ERROR:", err.message || err);
             return next(err);
         });
 }
@@ -186,6 +187,8 @@ function loginUser(req, res, next) {
 }
 
 // mealPlan queries
+//var data = {"name" : "Breakfast", "uid": curr_user_id};
+
 
 function getMealRecipes(req, res, next) {
 
@@ -256,6 +259,27 @@ function getIngredientsRecipes(req, res, next){
 
 }
 
+// nested aggregation query
+function nestedAggregation(req, res, next){
+    db.many('select temp.uid, temp.agrprice' +
+        'from (select usl.uid, $1(i.price) as agrprice' +
+            'from user_shoppinglist usl, shoppinglist_ingredients sli, ingredients i' +
+            'where usl.slid = sli.slid and sli.iid = i.iid' +
+            'group by usl.uid) as temp)' +
+        'where temp.agrprice = (select $2(temp.agrprice) from temp)', [req.body.agg1, req.body.agg2])
+        .then(function(data){
+            res.status(200)
+                .json({
+                    status: 'success',
+                    data: data,
+                    message:'Retrieved ingredients for recipe'
+                })
+        })
+        .catch(function(err){
+            return next(err);
+        })
+
+}
 
 module.exports = {
     getAllRecipes: getAllRecipes,
@@ -271,5 +295,6 @@ module.exports = {
     getIngredientsRecipes : getIngredientsRecipes,
     getRecipesByIngredients : getRecipesByIngredients,
     getMealPlanID : getMealPlanID,
-    addMealPlanRecipe : addMealPlanRecipe
+    addMealPlanRecipe : addMealPlanRecipe,
+    nestedAggregation : nestedAggregation
 };

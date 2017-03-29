@@ -3,12 +3,20 @@
     <p>{{display}}</p>
 
     <div class="form-group" ng-init="getIngredients()" >
-        <select ng-model="ingredientOne" ng-options="x.name for x in ingredients">
-        </select>
-        <select ng-model="ingredientTwo" ng-options="x.name for x in ingredients">
-        </select>
-        <select ng-model="ingredientThree" ng-options="x.name for x in ingredients">
-        </select>
-        <button id="nameSubmit"  type="submit" class="btn btn-success" ng-click = "searchRecipe()">Search</button>
+        <div class="row">
+            <select ng-model="ingredientOne" ng-options="x.name for x in ingredients">
+            </select>
+        </div>
+        <div class="row">
+            <select ng-model="ingredientTwo" ng-options="x.name for x in ingredients">
+            </select>
+        </div>
+        <div class="row">
+            <select ng-model="ingredientThree" ng-options="x.name for x in ingredients">
+            </select>
+        </div>
+        <div class="row">
+            <button id="nameSubmit"  type="submit" class="btn btn-success" ng-click = "searchRecipe()">Search</button>
+        </div>
     </div>
 </div>

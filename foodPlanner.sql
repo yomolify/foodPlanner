@@ -45,11 +45,13 @@ CREATE TABLE Recipes (
   cid INT,
   instructions TEXT[],
   FOREIGN KEY (cid) references Cuisines(cid)
+
 );
 
 CREATE TABLE Ingredients (
   iid SERIAL PRIMARY KEY,
-  name TEXT
+  name TEXT,
+  price MONEY
 );
 
 CREATE TABLE Ingredients_Recipes (
@@ -58,7 +60,7 @@ CREATE TABLE Ingredients_Recipes (
   measurement TEXT,
   PRIMARY KEY(iid, rid),
   FOREIGN KEY (iid) references Ingredients(iid),
-  FOREIGN KEY (rid) references Recipes(rid)
+  FOREIGN KEY (rid) references Recipes(rid) ON DELETE CASCADE
   );
 
 CREATE TABLE MealPlan_User(
@@ -74,7 +76,7 @@ CREATE TABLE MealPlan_Recipe(
     rid INT,
     PRIMARY KEY (mid, rid),
     FOREIGN KEY (mid) references MealPlan_User(mid),
-    FOREIGN KEY (rid) references Recipes(rid)
+    FOREIGN KEY (rid) references Recipes(rid) ON DELETE CASCADE
     );
 
 CREATE TABLE Recipe_User (
@@ -82,7 +84,7 @@ CREATE TABLE Recipe_User (
     rid INT,
     PRIMARY KEY (uid, rid),
     FOREIGN KEY (uid) references Users(uid),
-    FOREIGN KEY (rid) references Recipes(rid)
+    FOREIGN KEY (rid) references Recipes(rid) ON DELETE CASCADE
     );
 
 CREATE TABLE User_ShoppingList(
@@ -138,6 +140,9 @@ INSERT INTO UserTypes (name)
 INSERT INTO UserTypes (name)
   VALUES ('Admin');
 
+INSERT INTO Users (name, utid)
+    VALUES('admin', 2);
+
 INSERT INTO Cuisines (cid, name)
   VALUES (300, 'American');
 
@@ -156,197 +161,197 @@ INSERT INTO Cuisines (cid, name)
 INSERT INTO Cuisines (cid, name)
   VALUES (305, 'Japanese');
 
-INSERT INTO Ingredients (iid, name)
-VALUES (200, 'eggs');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (200, 'eggs', 3.78);
 
-INSERT INTO Ingredients (iid, name)
-VALUES (201, 'cheese');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (201, 'cheese', 5.88);
 
-INSERT INTO Ingredients (iid, name)
-VALUES (202, 'spinach');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (202, 'spinach', 1.77);
 
-INSERT INTO Ingredients (iid, name)
-VALUES (203, 'tomato');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (203, 'tomato', 1.39);
 
-INSERT INTO Ingredients (iid, name)
-VALUES (204, 'red bell pepper');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (204, 'red bell pepper', 2.10);
 
-INSERT INTO Ingredients (iid, name)
-VALUES (205, 'onion');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (205, 'onion', 0.98);
 
-INSERT INTO Ingredients (iid, name)
-VALUES (206, 'potato');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (206, 'potato', 1.17);
 
-INSERT INTO Ingredients (iid, name)
-VALUES (207, 'salt');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (207, 'salt', 3.49);
 
-INSERT INTO Ingredients (iid, name)
-VALUES (208, 'oil');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (208, 'oil', 7.97);
 
-INSERT INTO Ingredients (iid, name)
-VALUES (209, 'pepper');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (209, 'pepper', 7.48);
 
-INSERT INTO Ingredients (iid, name)
-VALUES (210, 'capers');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (210, 'capers', 2.95);
 
-INSERT INTO Ingredients (iid, name)
-VALUES (211, 'lemon');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (211, 'lemon', 0.77);
 
-INSERT INTO Ingredients (iid, name)
-VALUES (212, 'linguine');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (212, 'linguine', 3.48);
 
-INSERT INTO Ingredients (iid, name)
-VALUES (213, 'sugar');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (213, 'sugar', 3.27);
 
-INSERT INTO Ingredients (iid, name)
-VALUES (214, 'cinnamon');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (214, 'cinnamon', 2.29);
 
-INSERT INTO Ingredients (iid, name)
-VALUES (215, 'flour');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (215, 'flour', 3.38);
 
-INSERT INTO Ingredients (iid, name)
-VALUES (216, 'milk');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (216, 'milk', 2.37);
 
-INSERT INTO Ingredients (iid, name)
-VALUES (217, 'vanilla extract');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (217, 'vanilla extract', 4.99);
 
-INSERT INTO Ingredients (iid, name)
-VALUES (218, 'mayonnaise');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (218, 'mayonnaise', 3.97);
 
-INSERT INTO Ingredients (iid, name)
-VALUES (219, 'black pepper');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (219, 'black pepper', 5.48);
 
-INSERT INTO Ingredients (iid, name)
-VALUES (220, 'bread');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (220, 'bread', 2.48);
 
-INSERT INTO Ingredients (iid, name)
-VALUES (221, 'butter');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (221, 'butter', 3.97);
 
-INSERT INTO Ingredients (iid, name)
-VALUES (222, 'scallops');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (222, 'scallops', 13.98);
 
-INSERT INTO Ingredients (iid, name)
-VALUES (223, 'kale');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (223, 'kale', 1.77);
 
-INSERT INTO Ingredients (iid, name)
-VALUES (224, 'beef');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (224, 'beef', 16.59);
 
-INSERT INTO Ingredients (iid, name)
-VALUES (225, 'beef broth');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (225, 'beef broth', 1.25);
 
-INSERT INTO Ingredients (iid, name)
-VALUES (226, 'crackers');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (226, 'crackers', 3.17);
 
-INSERT INTO Ingredients (iid, name)
-VALUES (227, 'bread crumbs');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (227, 'bread crumbs', 2.99);
 
-INSERT INTO Ingredients (iid, name)
-VALUES (228, 'eggplant');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (228, 'eggplant', 2.47);
 
-INSERT INTO Ingredients (iid, name)
-VALUES (229, 'chicken');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (229, 'chicken', 10.39);
 
-INSERT INTO Ingredients (iid, name)
-VALUES (230, 'asparagus');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (230, 'asparagus', 3.86);
 
-INSERT INTO Ingredients (iid, name)
-VALUES (231, 'spaghetti sauce');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (231, 'spaghetti sauce', 1.97);
 
-INSERT INTO Ingredients (iid, name)
-VALUES (232, 'broccoli');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (232, 'broccoli', 2.97);
 
-INSERT INTO Ingredients (iid, name)
-VALUES (233, 'garlic');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (233, 'garlic', 0.99);
 
-INSERT INTO Ingredients (iid, name)
-VALUES (234, 'carrot');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (234, 'carrot', 1.68);
 
-INSERT INTO Ingredients (iid, name)
-VALUES (235, 'soy sauce');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (235, 'soy sauce', 2.88);
 
-INSERT INTO Ingredients (iid, name)
-VALUES (236, 'taco seasoning');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (236, 'taco seasoning', 1.57);
 
-INSERT INTO Ingredients (iid, name)
-VALUES (237, 'rice');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (237, 'rice', 4.98);
 
-INSERT INTO Ingredients (iid, name)
-VALUES (238, 'lettuce');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (238, 'lettuce', 1.78);
 
-INSERT INTO Ingredients (iid, name)
-VALUES (239, 'prawns');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (239, 'prawns', 14.34);
 
-INSERT INTO Ingredients (iid, name)
-VALUES (240, 'green beans');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (240, 'green beans', 4.99);
 
-INSERT INTO Ingredients (iid, name)
-VALUES (241, 'coriander leaves');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (241, 'coriander leaves', 1.98);
 
-INSERT INTO Ingredients (iid, name)
-VALUES (242, 'rice wrappers');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (242, 'rice wrappers', 3.28);
 
-INSERT INTO Ingredients (iid, name)
-VALUES (243, 'spring onion');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (243, 'spring onion', 0.57);
 
-INSERT INTO Ingredients (iid, name)
-VALUES (244, 'miso paste');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (244, 'miso paste', 4.98);
 
-INSERT INTO Ingredients (iid, name)
-VALUES (245, 'chili paste');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (245, 'chili paste', 3.98);
 
-INSERT INTO Ingredients (iid, name)
-VALUES (246, 'curry paste');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (246, 'curry paste', 5.28);
 
-INSERT INTO Ingredients (iid, name)
-VALUES (247, 'shallot');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (247, 'shallot', 2.48);
 
-INSERT INTO Ingredients (iid, name)
-VALUES (248, 'sardine');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (248, 'sardine', 1.44);
 
-INSERT INTO Ingredients (iid, name)
-VALUES (249, 'seaweed');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (249, 'seaweed', 3.78);
 
-INSERT INTO Ingredients (iid, name)
-VALUES (250, 'strawberries');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (250, 'strawberries', 3.98);
 
-INSERT INTO Ingredients (iid, name)
-VALUES (251, 'mascarpone');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (251, 'mascarpone', 9.98);
 
-INSERT INTO Ingredients (iid, name)
-VALUES (252, 'condensed milk');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (252, 'condensed milk', 2.67);
 
-INSERT INTO Ingredients (iid, name)
-VALUES (253, 'cones');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (253, 'cones', 3.48);
 
-INSERT INTO Ingredients (iid, name)
-VALUES (254, 'sprinkles');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (254, 'sprinkles', 2.59);
 
-INSERT INTO Ingredients (iid, name)
-VALUES (255, 'water');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (255, 'water', 1.05 );
 
-INSERT INTO Ingredients (iid, name)
-VALUES (256, 'tofu');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (256, 'tofu', 1.98);
 
-INSERT INTO Ingredients (iid, name)
-VALUES (257, 'dark chocolate');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (257, 'dark chocolate', 5.48);
 
-INSERT INTO Ingredients (iid, name)
-VALUES (258, 'soured cream');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (258, 'soured cream', 3.98);
 
-INSERT INTO Ingredients (iid, name)
-VALUES (259, 'red chili');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (259, 'red chili', 2.98);
 
-INSERT INTO Ingredients (iid, name)
-VALUES (260, 'cannellini beans');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (260, 'cannellini beans', 0.88);
 
-INSERT INTO Ingredients (iid, name)
-VALUES (261, 'butter beans ');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (261, 'butter beans', 2.28);
 
-INSERT INTO Ingredients (iid, name)
-VALUES (262, 'vinegar');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (262, 'vinegar', 1.48);
 
-INSERT INTO Ingredients (iid, name)
-VALUES (263, 'parsley');
+INSERT INTO Ingredients (iid, name, price)
+VALUES (263, 'parsley', 1.47);
 
 
 INSERT INTO Recipes (rid, name, cid, instructions)

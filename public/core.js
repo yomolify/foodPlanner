@@ -50,6 +50,14 @@ app.config(['$routeProvider',
             templateUrl: 'views/searchIngredients.html',
             controller: 'SearchIngredientsController'
         }).
+        when('/deleteRecipe', {
+            templateUrl: 'views/deleteRecipes.html',
+            controller: 'DeleteRecipeController'
+        }).
+        when('/customerInfo', {
+            templateUrl: 'views/customerInfo.html',
+            controller: 'CustomerInfoController'
+        }).
         otherwise({
             redirectTo: '/welcome'
         });
@@ -78,11 +86,12 @@ app.factory('recipeService', function(){
 });
 
 app.factory('userService', function(){
-    var userInfo = {username: '', user_id : -1};
+    var userInfo = {username: '', user_id : -1, type : -1};
 
-    var setUser = function(username, id){
+    var setUser = function(username, id, utid){
         userInfo.username = username;
         userInfo.user_id = id;
+        userInfo.type = utid
     }
 
     var retrieveUser = function(){
@@ -147,16 +156,25 @@ app.controller('WelcomeController', function($scope, $http, $location, userServi
 
         $http(req)
             .then(function(resp){
-                userService.setUser(resp.data.data[0].name, resp.data.data[0].uid);
+                userService.setUser(resp.data.data[0].name, resp.data.data[0].uid,
+                                    resp.data.data[0].utid);
                 $location.path('/home');
             })
     }
 });
 
 app.controller('HomeController', function($scope, userService){
+    $scope.display = 'not admin'
     $scope.username = 'hi';
-    $scope.getName = function(){
-        $scope.username = userService.retrieveUser().username;
+    $scope.admin = false;
+    $scope.initHome = function(){
+        var user = userService.retrieveUser();
+        $scope.display = user;
+        $scope.username = user.username;
+        if (user.type == 2){
+            $scope.admin = true;
+            $scope.display = 'is admin';
+        }
     }
 });
 
@@ -342,6 +360,41 @@ app.controller('SearchIngredientsController', function($scope, $http, $location,
     }
 });
 
+app.controller('DeleteRecipeController', function($scope, $http){
+    $scope.recipe = {};
+    $scope.display = 'hi';
+    $scope.deleted = false;
+    $scope.initRecipes = function(){
+        var req = {
+            method: 'GET',
+            url: 'http://localhost:3000/api/recipes',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        };
+
+        $http(req)
+            .then(function(resp){
+                $scope.recipes = resp.data.data;
+            })
+    }
+
+    $scope.deleteRecipe = function(){
+        var req = {
+            method: 'DELETE',
+            url: 'http://localhost:3000/api/recipes/' + $scope.recipe.rid,
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+        $http(req)
+            .then(function(resp){
+                $scope.display = resp;
+                $scope.deleted = true;
+            })
+    }
+});
+
 app.controller('SearchBreakfastRecipesController', function($scope, $http, $location, userService, recipeService){
     $scope.mealName = '';
     var curr_user = userService.retrieveUser();
@@ -418,10 +471,10 @@ app.controller('SearchDinnerRecipesController', function($scope, $http, $locatio
                 recipeService.addRecipes(rec);
                 $scope.display = recipeService.retrieveRecipes();
                 $location.path('/dinner');
+
             })
     }
 });
-
 app.controller('SearchSnacksRecipesController', function($scope, $http, $location, userService, recipeService){
     $scope.mealName = '';
     var curr_user = userService.retrieveUser();
@@ -431,8 +484,8 @@ app.controller('SearchSnacksRecipesController', function($scope, $http, $locatio
         var data = {"name" : "Snacks", "uid": curr_user_id};
 
         var req = {
-            method: 'POST',
-            url: 'http://localhost:3000/api/meal/recipes',
+                method: 'POST',
+                url: 'http://localhost:3000/api/meal/recipes',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -445,6 +498,30 @@ app.controller('SearchSnacksRecipesController', function($scope, $http, $locatio
                 recipeService.addRecipes(rec);
                 $scope.display = recipeService.retrieveRecipes();
                 $location.path('/snacks');
+            })
+    }
+});
+
+
+app.controller('CustomerInfoController', function($scope){
+    $scope.aggregations = ["MAX", "MIN", "COUNT", "AVG", "SUM"];
+    $scope.aggregation1 = '';
+    $scope.aggregation2 = '';
+
+    $scope.searchPrices = function() {
+        var data = {"agg1": $scope.aggregation1, "agg2": $scope.aggregation2};
+        var req = {
+            method: 'POST',
+            url: 'http://localhost:3000/api/nestedaggregation',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: data
+        }
+        $http(req)
+            .then(function (resp) {
+                var data = resp.data.data;
+                // todo: do something here
             })
     }
 });
