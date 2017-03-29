@@ -1,0 +1,22 @@
+<div id="searchIngredients" class="col-sm-8 text-left">
+    <h2>Search Recipes by Ingredients</h2>
+    <p>{{display}}</p>
+
+    <div class="form-group" ng-init="getIngredients()" >
+        <div class="row">
+            <select ng-model="ingredientOne" ng-options="x.name for x in ingredients">
+            </select>
+        </div>
+        <div class="row">
+            <select ng-model="ingredientTwo" ng-options="x.name for x in ingredients">
+            </select>
+        </div>
+        <div class="row">
+            <select ng-model="ingredientThree" ng-options="x.name for x in ingredients">
+            </select>
+        </div>
+        <div class="row">
+            <button id="nameSubmit"  type="submit" class="btn btn-success" ng-click = "searchRecipe()">Search</button>
+        </div>
+    </div>
+</div>

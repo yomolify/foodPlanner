@@ -1,0 +1,9 @@
+<div id="recipeResults" class="col-sm-8 text-left" ng-init="getResults()">
+    {{display}}
+    <h3>Snacks</h3>
+    <br/>
+    <hr>
+    <div class="list-group" ng-repeat="recipe in recipes">
+        <a class="list-group-item list-group-item-action" ng-href="#recipe/{{recipe.rid}}">{{recipe.name}}</a>
+    </div>
+</div>

@@ -1,0 +1,15 @@
+<div id="name" class="col-sm-8 text-left">
+    {{display}}
+    {{mer}}
+    <h2>Meal Plans:</h2>
+    <div class="list-group">
+        <a href="#breakfast" ng-controller="SearchBreakfastRecipesController" ng-model="mealName" ng-click="searchMealRecipe()"
+           class="list-group-item list-group-item-action">Breakfast</a>
+        <a href="#lunch" ng-controller="SearchLunchRecipesController" ng-model="mealName" ng-click="searchMealRecipe()"
+           class="list-group-item list-group-item-action">Lunch</a>
+        <a href="#dinner"  ng-controller="SearchDinnerRecipesController" ng-model="mealName" ng-click="searchMealRecipe()"
+           class="list-group-item list-group-item-action">Dinner</a>
+        <a href="#snacks"  ng-controller="SearchSnacksRecipesController" ng-model="mealName" ng-click="searchMealRecipe()"
+           class="list-group-item list-group-item-action">Snacks</a>
+    </div>
+</div>
