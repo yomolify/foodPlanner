@@ -150,6 +150,38 @@ CREATE TRIGGER new_sl_user
   EXECUTE PROCEDURE shoppinglist_user();
 
 
+-- Created trigger for adding recipe to meal plan will add all ingredients to shopping list
+CREATE FUNCTION addingredientstoshoppinglist() RETURNS trigger AS $$
+    DECLARE
+        cur_uid          integer;
+        cur_slid          integer;
+        r ingredients_recipes%rowtype;
+    BEGIN
+        IF NEW.mid IS NULL THEN
+            RAISE EXCEPTION 'mid cannot be null';
+        END IF;
+        IF NEW.rid IS NULL THEN
+            RAISE EXCEPTION 'rid cannot be null';
+        END IF;
+
+        select uid from mealplan_user where mid=NEW.mid INTO cur_uid;
+        select slid from user_shoppinglist where uid=cur_uid INTO cur_slid;
+
+        FOR r IN (Select ir.iid from ingredients_recipes ir where ir.rid in (select mr.rid from mealplan_recipe mr where mr.mid=NEW.mid))
+        LOOP
+
+          INSERT INTO shoppinglist_ingredients(slid, iid) VALUES (cur_slid, r.iid);
+        END LOOP;
+        RETURN NEW;
+    END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER addtomealplan
+  AFTER INSERT
+  ON mealplan_recipe
+  FOR EACH ROW
+  EXECUTE PROCEDURE addingredientstoshoppinglist();
+
 
 INSERT INTO UserTypes (name)
   VALUES ('Regular');
