@@ -58,6 +58,10 @@ app.config(['$routeProvider',
             templateUrl: 'views/customerInfo.html',
             controller: 'CustomerInfoController'
         }).
+        when('/customerIngredients', {
+            templateUrl: 'views/customerIngredients.html',
+            controller: 'CustomerIngredientsController'
+        }).
         otherwise({
             redirectTo: '/welcome'
         });
@@ -525,6 +529,13 @@ app.controller('CustomerInfoController', function($scope){
             })
     }
 });
+
+app.controller('CustomerIngredientsController', function($scope){
+    $scope.customers = [];
+    $scope.getDivision = function(){
+        // todo: do something here
+    }
+})
 
 // app.controller('RecipeController', function($scope, $routeParams){
 //     $scope.recipe_id = $routeParams.rid;

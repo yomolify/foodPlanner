@@ -211,8 +211,9 @@ function getMealRecipes(req, res, next) {
 }
 
 function getMealPlanID(req, res, next){
-    db.one('select distinct mr.mid from mealplan_recipe mr, mealplan_user mu' +
-        'mr.mid = mu.mid and mu.uid = $1 and mu.name = $2', [req.body.uid, req.body.name])
+    console.log('get: ' + req.body.uid + "name: " + req.body.name);
+    db.one('select mid from mealplan_user mu where ' +
+        'uid = $1 and name = $2', [req.body.uid, req.body.name])
         .then(function (data){
             res.status(200)
                 .json({
@@ -222,12 +223,14 @@ function getMealPlanID(req, res, next){
                 });
         })
         .catch(function (err){
+            console.log("ERROR:", err.message || err);
             return next(err);
         })
 }
 
 function addMealPlanRecipe(req, res, next){
-    db.one('insert into mealplan_recipe(mid, rid) values($1, $2)', [req.body.mid, req.body.rid])
+    console.log('add: ' + req.body.mid + "rid: " + req.body.rid);
+    db.none('insert into mealplan_recipe(mid, rid) values($1, $2)', [req.body.mid, req.body.rid])
         .then(function (data){
             res.status(200)
                 .json({
@@ -237,6 +240,7 @@ function addMealPlanRecipe(req, res, next){
                 });
         })
         .catch(function (err){
+            console.log("ERROR:", err.message || err);
             return next(err);
         })
 }
