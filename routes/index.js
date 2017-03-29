@@ -21,7 +21,7 @@ router.post('/api/users', db.createUser);
 router.post('/api/login', db.loginUser);
 
 // Meals
-// router.get('/api/meals', db.getMeals);
+router.post('/api/meal/recipes', db.getMealRecipes);
 
 // router.get('/api/ingredients', db.getAllIngredients);
 
