@@ -256,7 +256,6 @@ function getIngredientsRecipes(req, res, next){
         .catch(function(err){
             return next(err);
         })
-
 }
 
 // nested aggregation query
@@ -278,7 +277,6 @@ function nestedAggregation(req, res, next){
         .catch(function(err){
             return next(err);
         })
-
 }
 
 
@@ -299,6 +297,26 @@ function getShoppingListIngredients(req, res, next){
         })
 }
 
+
+function divisonQuery(req, res, next){
+    db.many('Select distinct sli.slid from shoppinglist_ingredients sli where not exists' +
+        '((select i.iid from ingredients i) ' +
+        'EXCEPT ' +
+        '(select sl.iid from shoppinglist_ingredients sl where sl.slid=sli.slid))', req)
+        .then(function(data){
+            res.status(200)
+                .json({
+                    status: 'success',
+                    data: data,
+                    message:'Retrieved slid with all ingredients'
+                })
+        })
+        .catch(function(err){
+            return next(err);
+        })
+}
+
+
 module.exports = {
     getAllRecipes: getAllRecipes,
     getSingleRecipe: getSingleRecipe,
@@ -315,5 +333,6 @@ module.exports = {
     getMealPlanID : getMealPlanID,
     addMealPlanRecipe : addMealPlanRecipe,
     nestedAggregation : nestedAggregation,
-    getShoppingListIngredients: getShoppingListIngredients
+    getShoppingListIngredients: getShoppingListIngredients,
+    divisionQuery: divisonQuery
 };
