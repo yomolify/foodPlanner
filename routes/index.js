@@ -29,7 +29,8 @@ router.post('/api/meal/recipes', db.getMealRecipes);
 router.post('/api/mealplanid', db.getMealPlanID);
 router.post('/api/mealplans', db.addMealPlanRecipe);
 
-
+// Shopping List
+router.post('/api/shoppinglist/:id', db.getShoppingListIngredients)
 
 // router.get('/api/ingredients', db.getAllIngredients);
 

@@ -281,6 +281,24 @@ function nestedAggregation(req, res, next){
 
 }
 
+
+function getShoppingListIngredients(req, res, next){
+    db.many('select * from ingredients i where i.iid in ' +
+        '(select si.iid from shoppinglist_ingredients where si.ulid=' +
+        '(select usl.ulid from user_shoppinglist usl where usl.uid=$1))', req.body.uid)
+        .then(function(data){
+            res.status(200)
+                .json({
+                    status: 'success',
+                    data: data,
+                    message:'Retrieved ingredients for shoppinglist'
+                })
+        })
+        .catch(function(err){
+            return next(err);
+        })
+}
+
 module.exports = {
     getAllRecipes: getAllRecipes,
     getSingleRecipe: getSingleRecipe,
@@ -296,5 +314,6 @@ module.exports = {
     getRecipesByIngredients : getRecipesByIngredients,
     getMealPlanID : getMealPlanID,
     addMealPlanRecipe : addMealPlanRecipe,
-    nestedAggregation : nestedAggregation
+    nestedAggregation : nestedAggregation,
+    getShoppingListIngredients: getShoppingListIngredients
 };
