@@ -1,0 +1,56 @@
+<div id="recipeDetails" class="text-left" ng-init="getDetails()">
+    <h3>{{recipeName}}</h3>
+    <br/>
+    <div class = "row">
+    <div class = "col-md-8">
+        <h4>Ingredients</h4>
+        <hr>
+        <ul class="list-group" >
+            <li ng-repeat="ingredient in recipeIngredients" class="list-group-item">
+                {{ingredient.measurement + ", " + ingredient.name}}
+            </li>
+        </ul>
+        <br/>
+    </div>
+    <div class = "col-md-1"></div>
+    <div class = "col-md-2">
+        <h6>Add to Mealplan</h6>
+        <div class="radio">
+            <label>
+                <input type="radio" ng-model="mealPlan" value = "Breakfast">
+                Breakfast
+            </label><br/>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" ng-model="mealPlan" value = "Lunch">
+                Lunch
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" ng-model="mealPlan" value = "Dinner">
+                Dinner
+            </label><br/>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" ng-model="mealPlan" value = "Snack">
+                Snack
+            </label>
+        </div>
+        <button ng-click="addToMealPlan()" type="submit" class="btn btn-default">Add!</button>
+    </div>
+    <br/>
+    </div>
+
+    <h4>Instructions</h4>
+    <hr>
+    <ul class="list-group" >
+        <li ng-repeat="instruction in instructions" class="list-group-item">
+            {{instruction}}
+        </li>
+    </ul>
+  
+
+</div>
