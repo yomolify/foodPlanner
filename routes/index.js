@@ -8,13 +8,17 @@ var db = require('../queries');
 // Recipes
 router.get('/api/recipes', db.getAllRecipes);
 router.get('/api/recipes/:id', db.getSingleRecipe);
+router.post('/api/recipes/name', db.getRecipesByName);
 router.post('/api/recipes', db.createRecipe);
 router.put('/api/recipes/:id', db.updateRecipe);
 router.delete('/api/recipes/:id', db.removeRecipe);
 
+// Ingredients
+router.get('/api/ingredients', db.getAllIngredients);
+
 // Users
 router.post('/api/users', db.createUser);
-router.post('api/login', db.loginUser);
+router.post('/api/login', db.loginUser);
 
 // router.get('/api/ingredients', db.getAllIngredients);
 
