@@ -256,6 +256,7 @@ function getIngredientsRecipes(req, res, next){
 
 }
 
+
 module.exports = {
     getAllRecipes: getAllRecipes,
     getSingleRecipe: getSingleRecipe,

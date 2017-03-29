@@ -65,7 +65,6 @@ CREATE TABLE MealPlan_User(
     mid INT,
     uid INT NOT NULL,
     name TEXT,
-    UNIQUE(uid),
     PRIMARY KEY (mid),
     FOREIGN KEY (uid) references Users(uid)
     );
@@ -100,6 +99,38 @@ CREATE TABLE ShoppingList_Ingredients(
     FOREIGN KEY (iid) references Ingredients(iid),
     FOREIGN KEY (slid) references User_ShoppingList(slid)
     );
+
+
+CREATE FUNCTION meal_users() RETURNS trigger AS $$
+    BEGIN
+        IF NEW.utid IS NULL THEN
+            RAISE EXCEPTION 'utid cannot be null';
+        END IF;
+        IF NEW.name IS NULL THEN
+            RAISE EXCEPTION 'Name cannot be null';
+        END IF;
+
+        INSERT INTO mealplan_user(mid, uid, name)
+        VALUES (NEW.uid+1000, NEW.uid, 'Breakfast');
+
+        INSERT INTO mealplan_user(mid, uid, name)
+        VALUES (NEW.uid+2000, NEW.uid, 'Lunch');
+
+        INSERT INTO mealplan_user(mid, uid, name)
+        VALUES (NEW.uid+3000, NEW.uid, 'Dinner');
+
+        INSERT INTO mealplan_user(mid, uid, name)
+        VALUES (NEW.uid+4000, NEW.uid, 'Snacks');
+
+        RETURN NEW;
+    END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER newplans_user
+  AFTER INSERT
+  ON users
+  FOR EACH ROW
+  EXECUTE PROCEDURE meal_users();
 
 INSERT INTO UserTypes (name)
   VALUES ('Regular');
