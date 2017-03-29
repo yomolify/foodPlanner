@@ -1,9 +1,95 @@
-<div id="recipeResults" class="col-sm-8 text-left" ng-init="getResults()">
-    {{display}}
-    <h3>Dinner</h3>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Food Planner</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../stylesheets/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="../index.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Food Planner</a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="home.html">Home</a></li>
+                <li class="active"><a href="recipe.html">Recipes</a></li>
+                <li class="active"><a href="mealplan.html">Meal Plans</a></li>
+
+            </ul>
+            <!--<ul class="nav navbar-nav">-->
+                <!--<li class="active"><a href="#">Home</a></li>-->
+            <!--</ul>-->
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid text-center">
     <br/>
-    <hr>
-    <div class="list-group" ng-repeat="recipe in recipes">
-        <a class="list-group-item list-group-item-action" ng-href="#recipe/{{recipe.rid}}">{{recipe.name}}</a>
+    <div class="row content">
+        <div class="col-sm-2">
+        </div>
+
+
+        <!-- Welcome screen -->
+        <div id="welcome" class="col-sm-8 text-left">
+            <h2>My Shopping List</h2>
+            <br/>
+            <h3>There are ___ items in my shopping list </h3>
+            <br/>
+            <label for="item">Add item to list: </label>
+            <input type="text" id="item">
+            <button id="submit">Submit item</button>
+            <button id="clear">Clear items</button>
+            <ul id="list">
+
+            </ul>
+        </div>
+
+
+
+        <script>
+            var itemInput = document.getElementById("item");
+            var clear = document.getElementById("clear");
+            var submit = document.getElementById("submit");
+            var list = document.getElementById("list");
+            function addItem() {
+                var currentItem = itemInput.value;
+                var listItem = document.createElement("li");
+                listItem.innerHTML = currentItem;
+                list.appendChild(listItem);
+                itemInput.value = "";
+            }
+            submit.onclick = addItem;
+            clear.onclick = function() {
+                list.innerHTML = "";
+                itemInput.value = "";
+            }
+        </script>
+
+
     </div>
 </div>
+<footer class="container-fluid text-center">
+    <p>Copyright FoodPlanner © 2017</p>
+</footer>
+
+
+
+
+</body>
+</html>
+
+
