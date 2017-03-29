@@ -1,6 +1,7 @@
 
 <!-- After logging in / signing up -->
-<div id="home" class="col-sm-8 text-left" ng-init="getName()">
+<div id="home" class="col-sm-8 text-left" ng-init="initHome()">
+    {{display}}
     <h3 id="greeting">{{"Hey " + username + "!"}}</h3>
     <br/>
     <hr>
@@ -9,7 +10,16 @@
         <a href="#searchIngredients" class="list-group-item list-group-item-action">Search Recipes by Ingredients</a>
         <a href="#" class="list-group-item list-group-item-action">Shopping List</a>
         <a href="#" class="list-group-item list-group-item-action">Meal Plan</a>
+    </div>
 
+    <div ng-show = "admin">
+        <h3>Admin Options</h3>
+        <div class="list-group">
+            <a href="#deleteRecipe" class="list-group-item list-group-item-action">Delete Recipe</a>
+            <a href="#customerInfo" class="list-group-item list-group-item-action">Customer Shopping List Information</a>
+            <a href="#" class="list-group-item list-group-item-action">Shopping List</a>
+            <a href="#" class="list-group-item list-group-item-action">Meal Plan</a>
+        </div>
     </div>
 </div>
 
