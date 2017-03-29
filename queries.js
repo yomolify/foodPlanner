@@ -63,12 +63,25 @@ function getRecipesByName(req, res, next) {
 }
 
 function getRecipesByIngredients(req, res, next){
-    db.many("select distinct r.name from ingredients_recipes ir, recipes r " +
+    console.log(req.body);
+    db.many("select distinct on (r.name) r.name, ir.rid from ingredients_recipes ir, recipes r " +
         "where ir.rid = r.rid and ir.rid in (" +
         "(select ir1.rid from ingredients_recipes ir1 where ir1.iid=$1) intersect " +
-        "(select ir2.rid from ingredients_recipes ir2 where ir2.iid=$2)) intersect" +
-        "(select ir3.rid from ingredients_recipes ir3 where ir3.iid=$3",
-    [req])
+        "(select ir2.rid from ingredients_recipes ir2 where ir2.iid=$2) intersect" +
+        "(select ir3.rid from ingredients_recipes ir3 where ir3.iid=$3))",
+    [req.body.one, req.body.two, req.body.three])
+        .then(function(data){
+            res.status(200)
+                .json({
+                    status: 'success',
+                    data: data,
+                    message: 'Retrieved all recipes'
+                });
+        })
+        .catch(function(err){
+            console.log("ERROR:", err.message || err);
+            return next(err);
+        })
 }
 
 function createRecipe(req, res, next) {
@@ -191,6 +204,37 @@ function getMeals(req, res, next){
         })
 }
 
+function getMealPlanID(req, res, next){
+    db.one('select distinct mr.mid from mealplan_recipe mr, mealplan_user mu' +
+        'mr.mid = mu.mid and mu.uid = $1 and mu.name = $2', [req.body.uid, req.body.name])
+        .then(function (data){
+            res.status(200)
+                .json({
+                    status: 'success',
+                    data: data,
+                    message: 'Retrieved mealplan ID for user'
+                });
+        })
+        .catch(function (err){
+            return next(err);
+        })
+}
+
+function addMealPlanRecipe(req, res, next){
+    db.one('insert into mealplan_recipe(mid, rid) values($1, $2)', [req.body.mid, req.body.rid])
+        .then(function (data){
+            res.status(200)
+                .json({
+                    status: 'success',
+                    data: data,
+                    message: 'Inserted new recipe into MealPlan'
+                });
+        })
+        .catch(function (err){
+            return next(err);
+        })
+}
+
 // ingredients_recipes queries
 function getIngredientsRecipes(req, res, next){
     db.many('select * from ingredients_recipes ir, ingredients i' +
@@ -219,5 +263,8 @@ module.exports = {
     loginUser: loginUser,
     getRecipesByName: getRecipesByName,
     getAllIngredients: getAllIngreidents,
-    getIngredientsRecipes : getIngredientsRecipes
+    getIngredientsRecipes : getIngredientsRecipes,
+    getRecipesByIngredients : getRecipesByIngredients,
+    getMealPlanID : getMealPlanID,
+    addMealPlanRecipe : addMealPlanRecipe
 };
