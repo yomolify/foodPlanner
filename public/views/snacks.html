@@ -1,40 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Meal Plan - Snacks</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../stylesheets/style.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="../index.js"></script>
-</head>
-<body>
 
-<nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">Food Planner</a>
-        </div>
-        <div class="collapse navbar-collapse" id="myNavbar">
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Home</a></li>
-            </ul>
-        </div>
+<div id="recipeResults" class="col-sm-8 text-left" ng-init="getResults()">
+    {{display}}
+    <h3>Snacks</h3>
+    <br/>
+    <hr>
+    <div class="list-group" ng-repeat="recipe in recipes">
+        <a class="list-group-item list-group-item-action" ng-href="#recipe/{{recipe.rid}}">{{recipe.name}}</a>
     </div>
-</nav>
-
-<!--#TODO: fill out this part -->
-
-<footer class="container-fluid text-center">
-    <p>Copyright FoodPlanner © 2017</p>
-</footer>
-
-</body>
-</html>
+</div>
