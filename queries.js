@@ -191,14 +191,33 @@ function getMeals(req, res, next){
         })
 }
 
+// ingredients_recipes queries
+function getIngredientsRecipes(req, res, next){
+    db.many('select * from ingredients_recipes ir, ingredients i' +
+        ' where ir.iid = i.iid and ir.rid = $1', req.body.rid)
+        .then(function(data){
+            res.status(200)
+                .json({
+                    status: 'success',
+                    data: data,
+                    message:'Retrieved ingredients for recipe'
+                })
+        })
+        .catch(function(err){
+            return next(err);
+        })
+
+}
+
 module.exports = {
-  getAllRecipes: getAllRecipes,
-  getSingleRecipe: getSingleRecipe,
-  createRecipe: createRecipe,
-  updateRecipe: updateRecipe,
-  removeRecipe: removeRecipe,
-  createUser: createUser,
-  loginUser: loginUser,
-  getRecipesByName: getRecipesByName,
-  getAllIngredients: getAllIngreidents
+    getAllRecipes: getAllRecipes,
+    getSingleRecipe: getSingleRecipe,
+    createRecipe: createRecipe,
+    updateRecipe: updateRecipe,
+    removeRecipe: removeRecipe,
+    createUser: createUser,
+    loginUser: loginUser,
+    getRecipesByName: getRecipesByName,
+    getAllIngredients: getAllIngreidents,
+    getIngredientsRecipes : getIngredientsRecipes
 };

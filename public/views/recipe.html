@@ -1,0 +1,20 @@
+<div id="recipeDetails" class="text-left" ng-init="getDetails()">
+    <h3>{{recipeName}}</h3>
+    <br/>
+    <h4>Ingredients</h4>
+    <hr>
+    <ul class="list-group" >
+        <li ng-repeat="ingredient in recipeIngredients" class="list-group-item">
+            {{ingredient.measurement + ", " + ingredient.name}}
+        </li>
+    </ul>
+    <br/>
+    <h4>Instructions</h4>
+    <hr>
+    <ul class="list-group" >
+        <li ng-repeat="instruction in instructions" class="list-group-item">
+            {{instruction}}
+        </li>
+    </ul>
+
+</div>

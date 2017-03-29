@@ -1,4 +1,4 @@
-var app = angular.module('planner', []);
+var app = angular.module('planner', ['ngRoute']);
 
 app.config(['$routeProvider',
     function($routeProvider) {
@@ -20,10 +20,9 @@ app.config(['$routeProvider',
             controller: 'RecipeResultsController'
         }).
         when('/recipe/:rid', {
-            templateUrl: 'views/home.html',
+            templateUrl: 'views/recipe.html',
             controller: 'RecipeController'
         }).
-
         otherwise({
             redirectTo: '/welcome'
         });
@@ -120,10 +119,8 @@ app.controller('WelcomeController', function($scope, $http, $location, userServi
 
         $http(req)
             .then(function(resp){
-                // userService.setUser(resp.data.name, resp.data.uid);
-                // $scope.display = resp.data.name;
-                $scope.welcomeShow = false;
-                $scope.homeShow = true;
+                userService.setUser(resp.data.data[0].name, resp.data.data[0].uid);
+                $location.path('/home');
             })
     }
 })
@@ -171,29 +168,42 @@ app.controller('RecipeResultsController', function($scope, recipeService){
     }
 })
 
-app.controller('RecipeController', function($scope, $routeParams){
+app.controller('RecipeController', function($scope, $routeParams, $http){
+    $scope.display = 'hi';
     $scope.recipe_id = $routeParams.rid;
+    $scope.recipeName = 'RecipeName';
+
     $scope.getDetails = function(){
         var req = {
-            method: 'POST',
+            method: 'GET',
             url: 'http://localhost:3000/api/recipes/' + $scope.recipe_id,
             headers: {
                 'Content-Type': 'application/json'
-            },
-            data: data
+            }
         };
 
         $http(req)
             .then(function(resp){
-                var data =
-                // userService.setUser(resp.data.name, resp.data.uid);
-                // $scope.display = resp.data.name;
-                $scope.welcomeShow = false;
-                $scope.homeShow = true;
+                var data = resp.data.data;
+                $scope.recipeName = data.name;
+                $scope.instructions = data.instructions;
+                var reqdata = {rid : data.rid};
+                var req2 = {
+                    method: 'POST',
+                    url: 'http://localhost:3000/api/ingredientsRecipes/',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    data : reqdata
+                };
+                return $http(req2)
+                    .then(function(resp){
+                        $scope.display = $scope.instructions;
+                        $scope.recipeIngredients = resp.data.data;
+                    })
             })
     }
-
-}
+})
 //
 // app.controller('SearchByIngredients', function($scope, $http, $location, recipeService){
 //     $scope.recipeName = '';
