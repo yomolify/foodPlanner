@@ -112,6 +112,12 @@ app.controller('WelcomeController', function($scope, $http, $location, $window){
     $scope.username = '';
     $scope.loginname = '';
 
+    $scope.initRedirect = function(){
+        if ($window.localStorage.getItem("username") !== null){
+            $location.path('/home');
+        }
+    }
+
     $scope.signUp = function(){
         var data = {"name" : $scope.username, "utid" : 1};
         var req = {
@@ -200,9 +206,12 @@ app.controller('SearchNameController', function($scope, $http, $location, recipe
             .then(function(resp){
                 var rec = resp.data.data;
                 recipeService.addRecipes(rec);
-                $scope.display = recipeService.retrieveRecipes();
+                // $scope.display = recipeService.retrieveRecipes();
                 $location.path('/recipeResults');
+            }, function(err){
+                alert('No recipes found!')
             })
+
     }
 });
 
@@ -211,8 +220,9 @@ app.controller('RecipeResultsController', function($scope, recipeService){
     $scope.display = 'hi';
     $scope.getResults = function() {
         // $route.reload();
-        $scope.display = recipeService.retrieveRecipes();
+        // $scope.display = recipeService.retrieveRecipes();
         $scope.recipes = recipeService.retrieveRecipes();
+        recipeService.deleteAllRecipes();
     }
 });
 
@@ -221,8 +231,9 @@ app.controller('BreakfastRecipeResultsController', function($scope, recipeServic
     $scope.display = 'Breakfast';
     $scope.getResults = function() {
         // $route.reload();
-        $scope.display = recipeService.retrieveRecipes();
+        // $scope.display = recipeService.retrieveRecipes();
         $scope.recipes = recipeService.retrieveRecipes();
+        recipeService.deleteAllRecipes();
     }
 });
 
@@ -231,8 +242,9 @@ app.controller('LunchRecipeResultsController', function($scope, recipeService){
     $scope.display = 'Lunch';
     $scope.getResults = function() {
         // $route.reload();
-        $scope.display = recipeService.retrieveRecipes();
+        // $scope.display = recipeService.retrieveRecipes();
         $scope.recipes = recipeService.retrieveRecipes();
+        recipeService.deleteAllRecipes();
     }
 });
 
@@ -241,8 +253,9 @@ app.controller('DinnerRecipeResultsController', function($scope, recipeService){
     $scope.display = 'Dinner';
     $scope.getResults = function() {
         // $route.reload();
-        $scope.display = recipeService.retrieveRecipes();
+        // $scope.display = recipeService.retrieveRecipes();
         $scope.recipes = recipeService.retrieveRecipes();
+        recipeService.deleteAllRecipes();
     }
 });
 
@@ -251,8 +264,9 @@ app.controller('SnacksRecipeResultsController', function($scope, recipeService){
     $scope.display = 'Snacks';
     $scope.getResults = function() {
         // $route.reload();
-        $scope.display = recipeService.retrieveRecipes();
+        // $scope.display = recipeService.retrieveRecipes();
         $scope.recipes = recipeService.retrieveRecipes();
+        recipeService.deleteAllRecipes();
     }
 });
 
@@ -318,8 +332,10 @@ app.controller('RecipeController', function($scope, $routeParams, $http, $window
                     data : reqdata
                 };
                 return $http(req2)
-                    .then(function(resp){
-                        $scope.display = 'added to mealplan';
+                    .then(function successCallback(resp){
+                        alert("Added to mealplan!");
+                    }, function errorCallback (err){
+                        alert('Already added to meal plan!')
                     })
             })
     }
@@ -515,7 +531,7 @@ app.controller('SearchDinnerRecipesController', function($scope, $http, $locatio
             .then(function(resp){
                 var rec = resp.data.data;
                 recipeService.addRecipes(rec);
-                $scope.display = recipeService.retrieveRecipes();
+                // $scope.display = recipeService.retrieveRecipes();
                 $location.path('/dinner');
 
             })
@@ -541,7 +557,7 @@ app.controller('SearchSnacksRecipesController', function($scope, $http, $locatio
             .then(function(resp){
                 var rec = resp.data.data;
                 recipeService.addRecipes(rec);
-                $scope.display = recipeService.retrieveRecipes();
+                // $scope.display = recipeService.retrieveRecipes();
                 $location.path('/snacks');
             })
     }
