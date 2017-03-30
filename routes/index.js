@@ -36,6 +36,7 @@ router.post('/api/shoppinglist/:id', db.getShoppingListIngredients)
 
 // Aggregation
 router.post('/api/nestedaggregation', db.nestedAggregation);
+router.post('/api/shoppinglistagg', db.shoppingListAggregation);
 router.get('/api/division', db.divisionQuery);
 
 module.exports = router;

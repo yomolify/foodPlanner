@@ -261,6 +261,24 @@ function getIngredientsRecipes(req, res, next){
         })
 }
 
+// aggregation query
+function shoppingListAggregation(req, res, next){
+    db.one('select $2^(i.price::numeric) from ingredients i, user_shoppinglist us, shoppinglist_ingredients si ' +
+        'where i.iid = si.iid and us.slid = si.slid and us.uid = $1 group by us.uid', [req.body.uid, req.body.agg])
+        .then(function(data){
+            res.status(200)
+                .json({
+                    status: 'success',
+                    data: data,
+                    message:'Retrieved aggregation for user shoppinglist'
+                })
+        })
+        .catch(function(err){
+            console.log("ERROR:", err.message || err);
+            return next(err);
+        })
+}
+
 // nested aggregation query
 function nestedAggregation(req, res, next){
     console.log(req.body.agg1);
@@ -342,5 +360,6 @@ module.exports = {
     addMealPlanRecipe : addMealPlanRecipe,
     nestedAggregation : nestedAggregation,
     getShoppingListIngredients: getShoppingListIngredients,
-    divisionQuery: divisionQuery
+    divisionQuery: divisionQuery,
+    shoppingListAggregation : shoppingListAggregation
 };
