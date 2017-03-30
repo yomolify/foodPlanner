@@ -173,9 +173,9 @@ CREATE FUNCTION addingredientstoshoppinglist() RETURNS trigger AS $$
 
           select iid from shoppinglist_ingredients where iid=r.iid INTO exist_id;
 
-          -- IF exist_id IS NULL THEN
+          IF exist_id IS NULL THEN
             INSERT INTO shoppinglist_ingredients(slid, iid) VALUES (cur_slid, r.iid);
-          -- END IF;
+          END IF;
         END LOOP;
         RETURN NEW;
     END;
