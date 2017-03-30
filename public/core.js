@@ -93,32 +93,16 @@ app.factory('recipeService', function(){
     }
 });
 
-app.factory('userService', function(){
-    var userInfo = {username: '', user_id : -1, type : -1};
-
-    var setUser = function(username, id, utid){
-        userInfo.username = username;
-        userInfo.user_id = id;
-        userInfo.type = utid
+app.controller('IndexController', function($scope, $window){
+    $scope.display = 'hi';
+    $scope.logout = function(){
+        $window.localStorage.removeItem("username");
+        $window.localStorage.removeItem("uid");
+        $window.localStorage.removeItem("type");
     }
+})
 
-    var retrieveUser = function(){
-        return userInfo;
-    }
-
-    var removeUserInfo = function(){
-        userInfo.username = '';
-        userInfo.user_id = -1
-    }
-
-    return {
-        setUser : setUser,
-        retrieveUser : retrieveUser,
-        removeUserInfo : removeUserInfo
-    }
-});
-
-app.controller('WelcomeController', function($scope, $http, $location, userService){
+app.controller('WelcomeController', function($scope, $http, $location, $window){
     $scope.welcomeShow = true;
     $scope.homeShow = false;
     $scope.nameShow = false;
@@ -142,12 +126,12 @@ app.controller('WelcomeController', function($scope, $http, $location, userServi
         $http(req)
             .then(function(resp){
                 $scope.display = resp.data;
-                userService.setUser(resp.data.data[0].name, resp.data.data[0].uid);
-                $scope.display = userService.retrieveUser();
+                var user = resp.data.data[0];
+                $window.localStorage.setItem("username", user.name);
+                $window.localStorage.setItem("uid", user.uid);
+                // userService.setUser(resp.data.data[0].name, resp.data.data[0].uid);
+                // $scope.display = userService.retrieveUser();
                 $location.path('/home');
-                // $scope.username = resp.data.name;
-                // $scope.display = resp.data.name;
-
             })
     };
 
@@ -164,24 +148,35 @@ app.controller('WelcomeController', function($scope, $http, $location, userServi
 
         $http(req)
             .then(function(resp){
-                userService.setUser(resp.data.data[0].name, resp.data.data[0].uid,
-                                    resp.data.data[0].utid);
+                var user = resp.data.data[0];
+                $window.localStorage.setItem("username", user.name);
+                $window.localStorage.setItem("uid", user.uid);
+                $window.localStorage.setItem("type", user.utid);
                 $location.path('/home');
+            })
+            .catch(function(err){
+                alert('Please create a new user!')
             })
     }
 });
 
-app.controller('HomeController', function($scope, userService){
+app.controller('HomeController', function($scope, $window, $location){
     $scope.display = 'not admin'
     $scope.username = 'hi';
     $scope.admin = false;
     $scope.initHome = function(){
-        var user = userService.retrieveUser();
-        $scope.display = user;
-        $scope.username = user.username;
-        if (user.type == 2){
-            $scope.admin = true;
-            $scope.display = 'is admin';
+        if ($window.localStorage.getItem("username") == null){
+            alert('You need to login!');
+            $location.path('/welcome');
+        }
+        else {
+            $scope.display = $window.localStorage.getItem("uid");
+            $scope.username = $window.localStorage.getItem("username");
+            var type = $window.localStorage.getItem("type");
+            if (type == 2) {
+                $scope.admin = true;
+                $scope.display = 'is admin';
+            }
         }
     }
 });
@@ -215,6 +210,7 @@ app.controller('RecipeResultsController', function($scope, recipeService){
     $scope.recipes = [];
     $scope.display = 'hi';
     $scope.getResults = function() {
+        // $route.reload();
         $scope.display = recipeService.retrieveRecipes();
         $scope.recipes = recipeService.retrieveRecipes();
     }
@@ -224,6 +220,7 @@ app.controller('BreakfastRecipeResultsController', function($scope, recipeServic
     $scope.recipes = [];
     $scope.display = 'Breakfast';
     $scope.getResults = function() {
+        // $route.reload();
         $scope.display = recipeService.retrieveRecipes();
         $scope.recipes = recipeService.retrieveRecipes();
     }
@@ -233,6 +230,7 @@ app.controller('LunchRecipeResultsController', function($scope, recipeService){
     $scope.recipes = [];
     $scope.display = 'Lunch';
     $scope.getResults = function() {
+        // $route.reload();
         $scope.display = recipeService.retrieveRecipes();
         $scope.recipes = recipeService.retrieveRecipes();
     }
@@ -242,6 +240,7 @@ app.controller('DinnerRecipeResultsController', function($scope, recipeService){
     $scope.recipes = [];
     $scope.display = 'Dinner';
     $scope.getResults = function() {
+        // $route.reload();
         $scope.display = recipeService.retrieveRecipes();
         $scope.recipes = recipeService.retrieveRecipes();
     }
@@ -251,13 +250,14 @@ app.controller('SnacksRecipeResultsController', function($scope, recipeService){
     $scope.recipes = [];
     $scope.display = 'Snacks';
     $scope.getResults = function() {
+        // $route.reload();
         $scope.display = recipeService.retrieveRecipes();
         $scope.recipes = recipeService.retrieveRecipes();
     }
 });
 
-app.controller('RecipeController', function($scope, $routeParams, $http, userService){
-    $scope.display = 'hi';
+app.controller('RecipeController', function($scope, $routeParams, $http, $window){
+    $scope.display = $window.localStorage.getItem("uid");
     $scope.recipe_id = $routeParams.rid;
     $scope.recipeName = 'RecipeName';
     $scope.mealPlan = 'Breakfast';
@@ -295,7 +295,7 @@ app.controller('RecipeController', function($scope, $routeParams, $http, userSer
             })
     }
     $scope.addToMealPlan = function(){
-        var uid = userService.retrieveUser().user_id;
+        var uid = $window.localStorage.getItem("uid");
         var data = {"uid" : uid, "name": $scope.mealPlan};
         var req = {
             method: 'POST',
@@ -368,13 +368,13 @@ app.controller('SearchIngredientsController', function($scope, $http, $location,
     }
 });
 
-app.controller('ShoppingListController', function($scope, $http, userService){
+app.controller('ShoppingListController', function($scope, $http, $window){
     $scope.ingredients = [];
     $scope.display = 'hi';
     $scope.agg = 'MAX';
     $scope.aggvalue = 0;
     $scope.aggregationInfo = false;
-    var user_id = userService.retrieveUser().user_id;
+    var user_id = $window.localStorage.getItem("uid");
     $scope.initIngredients = function(){
         var data = {uid : user_id};
         var req = {
@@ -446,10 +446,9 @@ app.controller('DeleteRecipeController', function($scope, $http){
     }
 });
 
-app.controller('SearchBreakfastRecipesController', function($scope, $http, $location, userService, recipeService){
+app.controller('SearchBreakfastRecipesController', function($scope, $http, $location, $window, recipeService){
     $scope.mealName = '';
-    var curr_user = userService.retrieveUser();
-    var curr_user_id = curr_user.user_id;
+    var curr_user_id = $window.localStorage.getItem("uid");
     $scope.display = curr_user_id;
     $scope.searchMealRecipe = function(){
         var data = {"name" : "Breakfast", "uid": curr_user_id};
@@ -466,16 +465,14 @@ app.controller('SearchBreakfastRecipesController', function($scope, $http, $loca
             .then(function(resp){
                 var rec = resp.data.data;
                 recipeService.addRecipes(rec);
-                $scope.display = recipeService.retrieveRecipes();
                 $location.path('/breakfast');
             })
     }
 });
 
-app.controller('SearchLunchRecipesController', function($scope, $http, $location, userService, recipeService){
+app.controller('SearchLunchRecipesController', function($scope, $http, $location, $window, recipeService){
     $scope.mealName = '';
-    var curr_user = userService.retrieveUser();
-    var curr_user_id = curr_user.user_id;
+    var curr_user_id = $window.localStorage.getItem("uid");
     $scope.display = curr_user_id;
     $scope.searchMealRecipe = function(){
         var data = {"name" : "Lunch", "uid": curr_user_id};
@@ -493,16 +490,14 @@ app.controller('SearchLunchRecipesController', function($scope, $http, $location
             .then(function(resp){
                 var rec = resp.data.data;
                 recipeService.addRecipes(rec);
-                $scope.display = recipeService.retrieveRecipes();
                 $location.path('/lunch');
             })
     }
 });
 
-app.controller('SearchDinnerRecipesController', function($scope, $http, $location, userService, recipeService){
+app.controller('SearchDinnerRecipesController', function($scope, $http, $location, $window, recipeService){
     $scope.mealName = '';
-    var curr_user = userService.retrieveUser();
-    var curr_user_id = curr_user.user_id;
+    var curr_user_id = $window.localStorage.getItem("uid");
     $scope.display = curr_user_id;
     $scope.searchMealRecipe = function(){
         var data = {"name" : "Dinner", "uid": curr_user_id};
@@ -526,10 +521,9 @@ app.controller('SearchDinnerRecipesController', function($scope, $http, $locatio
             })
     }
 });
-app.controller('SearchSnacksRecipesController', function($scope, $http, $location, userService, recipeService){
+app.controller('SearchSnacksRecipesController', function($scope, $http, $location, $window, recipeService){
     $scope.mealName = '';
-    var curr_user = userService.retrieveUser();
-    var curr_user_id = curr_user.user_id;
+    var curr_user_id = $window.localStorage.getItem("uid");
     $scope.display = curr_user_id;
     $scope.searchMealRecipe = function(){
         var data = {"name" : "Snacks", "uid": curr_user_id};
