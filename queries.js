@@ -304,9 +304,10 @@ function nestedAggregation(req, res, next){
 
 
 function getShoppingListIngredients(req, res, next){
+    console.log(req.body.uid);
     db.many('select * from ingredients i where i.iid in ' +
-        '(select si.iid from shoppinglist_ingredients where si.ulid=' +
-        '(select usl.ulid from user_shoppinglist usl where usl.uid=$1))', req.body.uid)
+        '(select si.iid from shoppinglist_ingredients si where si.slid=' +
+        '(select usl.slid from user_shoppinglist usl where usl.uid=$1))', req.body.uid)
         .then(function(data){
             res.status(200)
                 .json({

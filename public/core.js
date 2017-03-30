@@ -62,6 +62,10 @@ app.config(['$routeProvider',
             templateUrl: 'views/customerIngredients.html',
             controller: 'CustomerIngredientsController'
         }).
+        when('/shoppingList', {
+            templateUrl: 'views/shoppinglist.html',
+            controller: 'ShoppingListController'
+        }).
         otherwise({
             redirectTo: '/welcome'
         });
@@ -363,6 +367,49 @@ app.controller('SearchIngredientsController', function($scope, $http, $location,
             })
     }
 });
+
+app.controller('ShoppingListController', function($scope, $http, userService){
+    $scope.ingredients = [];
+    $scope.display = 'hi';
+    $scope.agg = 'MAX';
+    $scope.aggvalue = 0;
+    $scope.aggregationInfo = false;
+    var user_id = userService.retrieveUser().user_id;
+    $scope.initIngredients = function(){
+        var data = {uid : user_id};
+        var req = {
+            method: 'POST',
+            url: 'http://localhost:3000/api/shoppinglist',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data : data
+        };
+
+        $http(req)
+            .then(function(resp){
+                $scope.ingredients = resp.data.data;
+            })
+    }
+    $scope.getAggregation = function(){
+        var data = {uid : user_id, agg : $scope.agg};
+        var req = {
+            method: 'POST',
+            url: 'http://localhost:3000/api/shoppinglistagg',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data : data
+        };
+
+        $http(req)
+            .then(function(resp){
+                $scope.display = resp.data.data[$scope.agg];
+                $scope.aggvalue = resp.data.data[$scope.agg];
+                $scope.aggregationInfo = true;
+            })
+    }
+})
 
 app.controller('DeleteRecipeController', function($scope, $http){
     $scope.recipe = {};
