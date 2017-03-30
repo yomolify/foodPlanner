@@ -47,7 +47,7 @@
         <div id="welcome" class="col-sm-8 text-left">
             <h2>My Shopping List</h2>
             <br/>
-            <h3>There are ___ items in my shopping list </h3>
+            <h3>Shopping list Items: <span id="count">0</span></h3>
             <br/>
             <label for="item">Add item to list: </label>
             <input type="text" id="item">
@@ -59,24 +59,34 @@
         </div>
 
 
-
         <script>
             var itemInput = document.getElementById("item");
             var clear = document.getElementById("clear");
             var submit = document.getElementById("submit");
             var list = document.getElementById("list");
+            var count = document.getElementById("count");
+            var itemCount = document.getElementById("list").getElementsByTagName("li").length;
             function addItem() {
                 var currentItem = itemInput.value;
                 var listItem = document.createElement("li");
                 listItem.innerHTML = currentItem;
                 list.appendChild(listItem);
                 itemInput.value = "";
+                itemCount++;
+                document.getElementById("count").innerHTML=itemCount;
             }
             submit.onclick = addItem;
             clear.onclick = function() {
                 list.innerHTML = "";
                 itemInput.value = "";
-            }
+                itemCount = 0;
+                document.getElementById("count").innerHTML=itemCount;
+            };
+
+
+
+
+
         </script>
 
 
