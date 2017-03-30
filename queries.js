@@ -191,7 +191,6 @@ function loginUser(req, res, next) {
 
 
 function getMealRecipes(req, res, next) {
-
     db.many("select r.name, r.rid from recipes r where r.rid in " +
         "(select mr.rid from mealplan_recipe mr where mr.mid=" +
         "(select mu.mid from mealplan_user mu where name=$1 and uid=$2))", [req.body.name, req.body.uid])
@@ -211,8 +210,9 @@ function getMealRecipes(req, res, next) {
 }
 
 function getMealPlanID(req, res, next){
-    db.one('select distinct mr.mid from mealplan_recipe mr, mealplan_user mu' +
-        'mr.mid = mu.mid and mu.uid = $1 and mu.name = $2', [req.body.uid, req.body.name])
+    console.log('get: ' + req.body.uid + "name: " + req.body.name);
+    db.one('select mid from mealplan_user mu where ' +
+        'uid = $1 and name = $2', [req.body.uid, req.body.name])
         .then(function (data){
             res.status(200)
                 .json({
@@ -222,12 +222,14 @@ function getMealPlanID(req, res, next){
                 });
         })
         .catch(function (err){
+            console.log("ERROR:", err.message || err);
             return next(err);
         })
 }
 
 function addMealPlanRecipe(req, res, next){
-    db.one('insert into mealplan_recipe(mid, rid) values($1, $2)', [req.body.mid, req.body.rid])
+    console.log('add: ' + req.body.mid + "rid: " + req.body.rid);
+    db.none('insert into mealplan_recipe(mid, rid) values($1, $2)', [req.body.mid, req.body.rid])
         .then(function (data){
             res.status(200)
                 .json({
@@ -237,6 +239,7 @@ function addMealPlanRecipe(req, res, next){
                 });
         })
         .catch(function (err){
+            console.log("ERROR:", err.message || err);
             return next(err);
         })
 }
@@ -258,14 +261,33 @@ function getIngredientsRecipes(req, res, next){
         })
 }
 
+// aggregation query
+function shoppingListAggregation(req, res, next){
+    db.one('select $2^(i.price::numeric) from ingredients i, user_shoppinglist us, shoppinglist_ingredients si ' +
+        'where i.iid = si.iid and us.slid = si.slid and us.uid = $1 group by us.uid', [req.body.uid, req.body.agg])
+        .then(function(data){
+            res.status(200)
+                .json({
+                    status: 'success',
+                    data: data,
+                    message:'Retrieved aggregation for user shoppinglist'
+                })
+        })
+        .catch(function(err){
+            console.log("ERROR:", err.message || err);
+            return next(err);
+        })
+}
+
 // nested aggregation query
 function nestedAggregation(req, res, next){
-    db.many('select temp.uid, temp.agrprice' +
-        'from (select usl.uid, $1(i.price) as agrprice' +
-            'from user_shoppinglist usl, shoppinglist_ingredients sli, ingredients i' +
-            'where usl.slid = sli.slid and sli.iid = i.iid' +
-            'group by usl.uid) as temp)' +
-        'where temp.agrprice = (select $2(temp.agrprice) from temp)', [req.body.agg1, req.body.agg2])
+    console.log(req.body.agg1);
+    db.many('with temp as ' +
+        '(select usl.uid, ' + '$1^' +'(i.price::numeric) as agrprice ' +
+        'from user_shoppinglist usl, shoppinglist_ingredients sli, ingredients i ' +
+        'where usl.slid = sli.slid and sli.iid = i.iid group by usl.uid)' +
+        'select users.name, temp.uid, temp.agrprice from users, temp ' +
+        'where users.uid = temp.uid and temp.agrprice = (select $2^(temp.agrprice) from temp) ', [req.body.agg1, req.body.agg2])
         .then(function(data){
             res.status(200)
                 .json({
@@ -275,15 +297,17 @@ function nestedAggregation(req, res, next){
                 })
         })
         .catch(function(err){
+            console.log("ERROR:", err.message || err);
             return next(err);
         })
 }
 
 
 function getShoppingListIngredients(req, res, next){
+    console.log(req.body.uid);
     db.many('select * from ingredients i where i.iid in ' +
-        '(select si.iid from shoppinglist_ingredients where si.ulid=' +
-        '(select usl.ulid from user_shoppinglist usl where usl.uid=$1))', req.body.uid)
+        '(select si.iid from shoppinglist_ingredients si where si.slid=' +
+        '(select usl.slid from user_shoppinglist usl where usl.uid=$1))', req.body.uid)
         .then(function(data){
             res.status(200)
                 .json({
@@ -293,16 +317,18 @@ function getShoppingListIngredients(req, res, next){
                 })
         })
         .catch(function(err){
+            console.log("ERROR:", err.message || err);
             return next(err);
         })
 }
 
 
-function divisonQuery(req, res, next){
+function divisionQuery(req, res, next){
+    console.log('got query');
     db.many('Select distinct sli.slid from shoppinglist_ingredients sli where not exists' +
         '((select i.iid from ingredients i) ' +
         'EXCEPT ' +
-        '(select sl.iid from shoppinglist_ingredients sl where sl.slid=sli.slid))', req)
+        '(select sl.iid from shoppinglist_ingredients sl where sl.slid=sli.slid))')
         .then(function(data){
             res.status(200)
                 .json({
@@ -312,6 +338,7 @@ function divisonQuery(req, res, next){
                 })
         })
         .catch(function(err){
+            console.log("ERROR:", err.message || err);
             return next(err);
         })
 }
@@ -334,5 +361,6 @@ module.exports = {
     addMealPlanRecipe : addMealPlanRecipe,
     nestedAggregation : nestedAggregation,
     getShoppingListIngredients: getShoppingListIngredients,
-    divisionQuery: divisonQuery
+    divisionQuery: divisionQuery,
+    shoppingListAggregation : shoppingListAggregation
 };

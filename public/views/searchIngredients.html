@@ -1,18 +1,20 @@
 <div id="searchIngredients" class="col-sm-8 text-left">
     <h2>Search Recipes by Ingredients</h2>
-    <p>{{display}}</p>
 
     <div class="form-group" ng-init="getIngredients()" >
         <div class="row">
-            <select ng-model="ingredientOne" ng-options="x.name for x in ingredients">
+            <label for="ing1" class="col-sm-3 control-label">Ingredient 1</label>
+            <select ng-model="ingredientOne" ng-options="x.name for x in ingredients" id="ing1">
             </select>
         </div>
         <div class="row">
-            <select ng-model="ingredientTwo" ng-options="x.name for x in ingredients">
+            <label for="ing2" class="col-sm-3 control-label">Ingredient 1</label>
+            <select ng-model="ingredientTwo" ng-options="x.name for x in ingredients" id="ing2">
             </select>
         </div>
         <div class="row">
-            <select ng-model="ingredientThree" ng-options="x.name for x in ingredients">
+            <label for="ing1" class="col-sm-3 control-label">Ingredient 3</label>
+            <select ng-model="ingredientThree" ng-options="x.name for x in ingredients" id="id3">
             </select>
         </div>
         <div class="row">

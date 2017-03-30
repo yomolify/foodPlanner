@@ -1,0 +1,16 @@
+<div id="welcome" class="text-left" ng-init="getDivision()">
+    <h3>Customers whose shopping lists contain all ingredients:</h3>
+    <br>
+    <table class = "table" ng-show = 'hasResults'>
+        <tr >
+            <!--<th>Customer Name</th>-->
+            <th>Customer ID</th>
+        </tr>
+        <tr ng-repeat="c in customers">
+            <!--<td>c.name</td>-->
+            <td>c.cid</td>
+        </tr>
+    </table>
+
+    <p ng-show="nodata">No customers found</p>
+</div>
