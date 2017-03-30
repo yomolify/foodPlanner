@@ -155,6 +155,7 @@ CREATE FUNCTION addingredientstoshoppinglist() RETURNS trigger AS $$
     DECLARE
         cur_uid          integer;
         cur_slid          integer;
+        exist_id          integer;
         r ingredients_recipes%rowtype;
     BEGIN
         IF NEW.mid IS NULL THEN
@@ -170,7 +171,11 @@ CREATE FUNCTION addingredientstoshoppinglist() RETURNS trigger AS $$
         FOR r IN (Select ir.iid from ingredients_recipes ir where ir.rid in (select mr.rid from mealplan_recipe mr where mr.mid=NEW.mid))
         LOOP
 
-          INSERT INTO shoppinglist_ingredients(slid, iid) VALUES (cur_slid, r.iid);
+          select iid from shoppinglist_ingredients where iid=r.iid INTO exist_id;
+
+          IF exist_id IS NULL THEN
+            INSERT INTO shoppinglist_ingredients(slid, iid) VALUES (cur_slid, r.iid);
+          END IF;
         END LOOP;
         RETURN NEW;
     END;
