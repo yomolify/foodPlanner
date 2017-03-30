@@ -330,7 +330,7 @@ app.controller('SearchIngredientsController', function($scope, $http, $location,
     $scope.getIngredients = function(){
         var req = {
             method: 'GET',
-            url: 'http://localhost:3000/api/ingredients',
+            url: 'http://localhost:3000/api/ingredients/',
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -507,10 +507,12 @@ app.controller('SearchSnacksRecipesController', function($scope, $http, $locatio
 });
 
 
-app.controller('CustomerInfoController', function($scope){
+app.controller('CustomerInfoController', function($scope, $http){
+    $scope.display = 'hi';
     $scope.aggregations = ["MAX", "MIN", "COUNT", "AVG", "SUM"];
     $scope.aggregation1 = '';
     $scope.aggregation2 = '';
+    $scope.showResults = false;
 
     $scope.searchPrices = function() {
         var data = {"agg1": $scope.aggregation1, "agg2": $scope.aggregation2};
@@ -525,15 +527,35 @@ app.controller('CustomerInfoController', function($scope){
         $http(req)
             .then(function (resp) {
                 var data = resp.data.data;
+                $scope.res = data[0];
+                $scope.display = data;
+                $scope.showResults = true;
                 // todo: do something here
             })
     }
 });
 
-app.controller('CustomerIngredientsController', function($scope){
+app.controller('CustomerIngredientsController', function($scope, $http){
     $scope.customers = [];
+    $scope.hasResults = false;
     $scope.getDivision = function(){
-        // todo: do something here
+        var req = {
+            method: 'GET',
+            url: 'http://localhost:3000/api/division/',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+        $http(req)
+            .then(function (resp) {
+                var data = resp.data.data;
+                $scope.customers = data;
+                $scope.hasResults = true;
+            })
+            .catch(function(err){
+                alert('No customers found');
+                $scope.nodata = true;
+            })
     }
 })
 
