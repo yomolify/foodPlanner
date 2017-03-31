@@ -33,6 +33,8 @@ router.post('/api/mealplans', db.addMealPlanRecipe);
 router.post('/api/shoppinglist/', db.getShoppingListIngredients);
 
 router.post('/api/ingredients', db.getAllIngredients);
+router.post('/api/updateIngredient/', db.updateIngredient);
+router.post('/api/selectIngredients', db.selectIngredients);
 
 // Aggregation
 router.post('/api/nestedaggregation', db.nestedAggregation);

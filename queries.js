@@ -115,6 +115,24 @@ function updateRecipe(req, res, next) {
         });
 }
 
+function updateIngredient(req, res, next){
+    console.log(parseFloat(req.body.price));
+    console.log(req.body.iid);
+    db.none('update ingredients set price=$1 where iid=$2',
+        [parseFloat(req.body.price), req.body.iid])
+        .then(function () {
+            res.status(200)
+                .json({
+                    status: 'success',
+                    message: 'Updated recipe'
+                });
+        })
+        .catch(function (err) {
+            console.log("ERROR:", err.message || err);
+            return next(err);
+        });
+}
+
 function removeRecipe(req, res, next) {
     var rid = parseInt(req.params.id);
     db.result('delete from recipes where rid = $1', rid)
@@ -322,6 +340,49 @@ function getShoppingListIngredients(req, res, next){
         })
 }
 
+function selectIngredients(req, res, next){
+    console.log(req.body);
+    var query = 'select ';
+    var joined = false;
+    var columns = req.body.columns;
+    for (i = 0; i < columns.length; i++){
+        console.log(columns[i]);
+        query = query + columns[i] + ' ,'
+    }
+
+    query = query.substring(0,query.length -1) + ' from ingredients where ';
+    var obj = {};
+    if (Object.keys(req.body).indexOf('price') > -1){
+        var cond = req.body.condition;
+        obj['price'] = parseFloat(req.body.price);
+        query = query + 'price ' + cond +  ' ${price} ';
+        joined = true;
+    }
+    if (Object.keys(req.body).indexOf('name') > -1){
+
+        obj['name'] = req.body.name;
+        if (joined){
+            query = query + 'and ';
+        }
+        query = query + 'name = ${name}'
+    }
+    console.log(query);
+    console.log(obj);
+    db.many(query, obj)
+        .then(function(data){
+            res.status(200)
+                .json({
+                    status: 'success',
+                    data: data,
+                    message:'Retrieved slid with all ingredients'
+                })
+        })
+        .catch(function(err){
+            console.log("ERROR:", err.message || err);
+            return next(err);
+        })
+}
+
 
 function divisionQuery(req, res, next){
     console.log('got query');
@@ -362,5 +423,7 @@ module.exports = {
     nestedAggregation : nestedAggregation,
     getShoppingListIngredients: getShoppingListIngredients,
     divisionQuery: divisionQuery,
-    shoppingListAggregation : shoppingListAggregation
+    shoppingListAggregation : shoppingListAggregation,
+    updateIngredient : updateIngredient,
+    selectIngredients : selectIngredients
 };

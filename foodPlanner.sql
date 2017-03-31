@@ -51,7 +51,8 @@ CREATE TABLE Recipes (
 CREATE TABLE Ingredients (
   iid SERIAL PRIMARY KEY,
   name TEXT,
-  price MONEY
+  price NUMERIC,
+  check(price >0)
 );
 
 CREATE TABLE Ingredients_Recipes (
@@ -406,7 +407,6 @@ VALUES (262, 'vinegar', 1.48);
 
 INSERT INTO Ingredients (iid, name, price)
 VALUES (263, 'parsley', 1.47);
-
 
 INSERT INTO Recipes (rid, name, cid, instructions)
 VALUES (101, 'Pasta', 301,

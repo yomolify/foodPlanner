@@ -66,6 +66,14 @@ app.config(['$routeProvider',
             templateUrl: 'views/shoppinglist.html',
             controller: 'ShoppingListController'
         }).
+        when('/updatePrice', {
+            templateUrl: 'views/updatePrice.html',
+            controller: 'UpdatePriceController'
+        }).
+        when('/selectIngredients', {
+            templateUrl: 'views/browseIngredients.html',
+            controller: 'SelectIngredientsController'
+        }).
         otherwise({
             redirectTo: '/welcome'
         });
@@ -585,9 +593,12 @@ app.controller('CustomerInfoController', function($scope, $http){
             .then(function (resp) {
                 var data = resp.data.data;
                 $scope.res = data[0];
-                $scope.display = data;
+                $scope.display = resp;
                 $scope.showResults = true;
                 // todo: do something here
+            })
+            .catch(function (err){
+                alert('No customers found!');
             })
     }
 });
@@ -614,8 +625,99 @@ app.controller('CustomerIngredientsController', function($scope, $http){
                 $scope.nodata = true;
             })
     }
-})
+});
 
+app.controller('UpdatePriceController', function($scope, $http, $window){
+    $scope.newPrice = 0;
+    $scope.ingredients = [];
+    $scope.ingredient = {};
+    var user_id = $window.localStorage.getItem("uid");
+    $scope.initIngredients = function(){
+        var req = {
+            method: 'POST',
+            url: 'http://localhost:3000/api/ingredients',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        };
+
+        $http(req)
+            .then(function(resp){
+                $scope.ingredients = resp.data.data;
+            })
+    }
+    $scope.updatePrice = function(){
+        $scope.display = $scope.newPrice;
+        var data = {price : $scope.newPrice, iid : $scope.ingredient.iid};
+        var req = {
+            method: 'POST',
+            url: 'http://localhost:3000/api/updateIngredient',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data : data
+        };
+
+        $http(req)
+            .success(function(resp){
+                $scope.ingredients = resp.data.data;
+                alert('Price has been updated');
+            })
+            .catch(function(err){
+                alert('Price must be positive!');
+            })
+    }
+});
+
+app.controller('SelectIngredientsController', function($scope, $http){
+    $scope.hasResults = false;
+    $scope.ingredients = [];
+    $scope.price = '';
+    $scope.condition = '=';
+    $scope.name = '';
+    $scope.checkName = false;
+    $scope.columns = [];
+    $scope.values = {};
+    $scope.display = ''
+    $scope.getIngredients = function(){
+        $scope.display = 'in ingredients';
+        if ($scope.price !== ''){
+            $scope.values['price'] = $scope.price;
+        }
+
+        if ($scope.name !== ''){
+            $scope.values['name'] = $scope.name;
+        }
+        if ($scope.checkName){
+            $scope.columns.push('name');
+        }
+        if ($scope.checkPrice){
+            $scope.columns.push('price');
+        }
+
+        $scope.values['columns'] = $scope.columns;
+        $scope.values['condition'] = $scope.condition;
+        $scope.display = $scope.values;
+        var req = {
+            method: 'POST',
+            url: 'http://localhost:3000/api/selectIngredients/',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data : $scope.values
+        };
+
+        $http(req)
+            .then(function(resp){
+                $scope.display = resp;
+                var data = resp.data.data;
+                $scope.ingredients = data;
+                $scope.hasResults = true;
+            })
+
+    }
+
+})
 // app.controller('RecipeController', function($scope, $routeParams){
 //     $scope.recipe_id = $routeParams.rid;
 //     $scope.getDetails = function(){
