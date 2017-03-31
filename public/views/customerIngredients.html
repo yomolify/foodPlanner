@@ -1,15 +1,14 @@
 <div id="welcome" class="text-left" ng-init="getDivision()">
-    {{display}}
-    <h3>Customers whose shopping lists contain all ingredients:</h3>
+    <h3>Shopping lists which contain all ingredients:</h3>
     <br>
     <table class = "table" ng-show = 'hasResults'>
         <tr >
-            <th>Customer Name</th>
-            <th>Customer ID</th>
+            <th>Shopping List ID</th>
+            <!--<th>Customer ID</th>-->
         </tr>
         <tr ng-repeat="c in customers">
-            <td>{{c.name}}hi</td>
-            <td>{{c.uid}}hi</td>
+            <td>{{c.slid}}</td>
+            <!--<td>{{c.uid}}hi</td>-->
         </tr>
     </table>
 
