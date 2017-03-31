@@ -198,6 +198,9 @@ INSERT INTO UserTypes (name)
 INSERT INTO Users (name, utid)
     VALUES('admin', 2);
 
+INSERT INTO Users (uid, name, utid)
+    VALUES(2, 'Jamie', 1);
+
 INSERT INTO Cuisines (cid, name)
   VALUES (300, 'American');
 
@@ -894,3 +897,74 @@ INSERT INTO Ingredients_Recipes (iid, rid, measurement) VALUES (213, 125, '1 tsp
 
 INSERT INTO Ingredients_Recipes (iid, rid, measurement) VALUES (217, 125, '1 tsp');
 INSERT INTO Ingredients_Recipes (iid, rid, measurement) VALUES (255, 125, 'ice cubes, a handful');
+
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 200);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 201);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 202);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 203);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 204);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 205);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 206);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 207);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 208);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 209);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 210);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 211);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 212);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 213);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 214);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 215);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 216);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 217);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 218);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 219);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 220);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 221);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 222);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 223);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 224);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 225);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 226);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 227);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 228);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 229);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 230);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 231);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 232);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 233);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 234);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 235);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 236);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 237);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 238);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 239);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 240);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 241);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 242);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 243);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 244);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 245);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 246);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 247);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 248);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 249);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 250);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 251);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 252);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 253);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 254);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 255);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 256);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 257);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 258);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 259);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 260);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 261);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 262);
+INSERT INTO Shoppinglist_Ingredients (slid, iid) VALUES (1002, 263);
+
+
+
+
+
+

@@ -404,6 +404,23 @@ function divisionQuery(req, res, next){
         })
 }
 
+function linkShoppingList(req, res, next){
+    db.one('Select u.uid, u.name from users u, user_shoppinglist usl ' +
+        'where u.uid = usl.uid and usl.slid = $1', req.body.slid)
+        .then(function(data){
+            res.status(200)
+                .json({
+                    status: 'success',
+                    data: data,
+                    message:'Retrieved slid with all ingredients'
+                })
+        })
+        .catch(function(err){
+            console.log("ERROR:", err.message || err);
+            return next(err);
+        })
+}
+
 
 module.exports = {
     getAllRecipes: getAllRecipes,
@@ -425,5 +442,6 @@ module.exports = {
     divisionQuery: divisionQuery,
     shoppingListAggregation : shoppingListAggregation,
     updateIngredient : updateIngredient,
-    selectIngredients : selectIngredients
+    selectIngredients : selectIngredients,
+    linkShoppingList : linkShoppingList
 };

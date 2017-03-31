@@ -604,6 +604,7 @@ app.controller('CustomerInfoController', function($scope, $http){
 });
 
 app.controller('CustomerIngredientsController', function($scope, $http){
+    $scope.display = 'hi';
     $scope.customers = [];
     $scope.hasResults = false;
     $scope.getDivision = function(){
@@ -617,14 +618,30 @@ app.controller('CustomerIngredientsController', function($scope, $http){
         $http(req)
             .then(function (resp) {
                 var data = resp.data.data;
-                $scope.customers = data;
-                $scope.hasResults = true;
+                var data2 = {"slid" : data[0].slid};
+                var req = {
+                    method: 'POST',
+                    url: 'http://localhost:3000/api/linkShoppinglist',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    data : data2
+                };
+                return $http(req)
+                    .then (function (resp){
+
+                        $scope.customers = resp.data.data;
+                        $scope.display = $scope.customers;
+                        $scope.hasResults = true;
+                    })
+
             })
             .catch(function(err){
                 alert('No customers found');
                 $scope.nodata = true;
             })
     }
+
 });
 
 app.controller('UpdatePriceController', function($scope, $http, $window){
