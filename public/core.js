@@ -604,6 +604,7 @@ app.controller('CustomerInfoController', function($scope, $http){
 });
 
 app.controller('CustomerIngredientsController', function($scope, $http){
+    $scope.display = 'hi';
     $scope.customers = [];
     $scope.hasResults = false;
     $scope.getDivision = function(){
