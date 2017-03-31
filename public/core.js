@@ -414,7 +414,7 @@ app.controller('ShoppingListController', function($scope, $http, $window){
             .then(function(resp){
                 $scope.ingredients = resp.data.data;
             })
-    }
+    };
     $scope.getAggregation = function(){
         var data = {uid : user_id, agg : $scope.agg};
         var req = {
@@ -461,11 +461,11 @@ app.controller('DeleteRecipeController', function($scope, $http){
             headers: {
                 'Content-Type': 'application/json'
             }
-        }
+        };
         $http(req)
             .then(function(resp){
                 $scope.display = resp;
-                $scope.deleted = true;
+                alert('Recipe has been deleted!');
             })
     }
 });
