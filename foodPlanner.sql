@@ -171,12 +171,12 @@ CREATE FUNCTION addingredientstoshoppinglist() RETURNS trigger AS $$
 
         FOR r IN (Select ir.iid from ingredients_recipes ir where ir.rid in (select mr.rid from mealplan_recipe mr where mr.mid=NEW.mid))
         LOOP
+            BEGIN
+                INSERT INTO shoppinglist_ingredients(slid, iid) VALUES (cur_slid, r.iid);
 
-          select iid from shoppinglist_ingredients where iid=r.iid INTO exist_id;
-
-          IF exist_id IS NULL THEN
-            INSERT INTO shoppinglist_ingredients(slid, iid) VALUES (cur_slid, r.iid);
-          END IF;
+            EXCEPTION WHEN unique_violation THEN
+                -- Do nothing, just attempt the next thing
+            END;
         END LOOP;
         RETURN NEW;
     END;
